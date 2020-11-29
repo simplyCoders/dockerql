@@ -1,8 +1,8 @@
 {
-  "name": "kubequery",
+  "name": "docke-registry-rquery",
   "author": "simplyCoders",
   "version": "1.0.0",
-  "description": "SQL interface to read-only kube-ctl",
+  "description": "A read-only SQL-like interface for docker v2 registry",
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",

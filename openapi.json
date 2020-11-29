@@ -1,11 +1,11 @@
 {
     "openapi": "3.0.2",
     "info": {
-        "title": "kubequery",
-        "description": "SQL interface to read-only kube-ctl",
+        "title": "DockerQuery",
+        "description": "A read-only SQL-like interface for docker v2 registry",
         "license": {
             "name": "MIT",
-            "url": "https://github.com/simplyCoders/kubequery/blob/main/LICENSE"
+            "url": "https://github.com/simplyCoders/dockerquery/blob/main/LICENSE"
         },
         "version": "1.0"
     },
