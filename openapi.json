@@ -1,0 +1,156 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "kubequery",
+        "description": "SQL interface to read-only kube-ctl",
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/simplyCoders/kubequery/blob/main/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080/v1"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "generalError": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "badrequestError": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 400
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Expected \"SELECT\" statement but \"CREATE\" found."
+                    }
+                }
+            },
+            "forbiddenError": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 403
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Insufficient permissions to access this data."
+                    }
+                }
+            },
+            "notfoundError": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 404
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Table \"{table_name}\" not found."
+                    }
+                }
+            },
+            "queryResult": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string", 
+                        "example": "Ok"
+                    },
+                    "records": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/query": {
+            "get": {
+                "description": "Query endpoint, get SQL statemnent and returns array of records",
+                "operationId": "query",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "SQL like query string",
+                        "example": "SELECT * FROM pods",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/queryResult"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/badrequestError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/forbiddenError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/notfoundError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
