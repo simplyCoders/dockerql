@@ -24,3 +24,32 @@ Few things we can say about the project:
 1. Available as open source under the MIT license. 
 2. Built with Node.JS, TypeScript, and OpenAPI.
 3. Packaged as a container image and can ge deployed easily in a kubernetes or other docker envrionments. 
+
+## Authentication to the Registry
+
+The credentials to authenticate to the docker registry can be taken from either an env virable or config json file. If both are setup then the env variable wins. 
+
+1. First option: Env variable called: "DOCKER_REGISTRY_CONFIG" contains json document with the configuration. 
+1. Second option: Env variable called: "DOCKER_REGISTRY_CONFIG_FILE" points to the location of the configuration file. Default location is assumed "./docker-registry-config.json".
+3. The implementation should support any docker regitry compliant with docekr registry api v2. 
+
+## Config file for Docker Hub
+
+The following example access docker hub.
+
+~~~
+{
+    "type": "dockerV2",
+    "endpoint": "https://hub.docker.com/v2",
+    "username": {username},
+    "password": {password}
+}
+~~~
+
+## Sample SQL statements
+
+~~~
+SELECT * FROM namespaces
+SELECT * FROM repos WHERE namespace = {namespace}
+SELECT * FROM tags WHERE namespace = {namespace} AND repo = {repo}
+~~~

@@ -1,5 +1,5 @@
 {
-  "name": "docke-registry-rquery",
+  "name": "docker-registry-rquery",
   "author": "simplyCoders",
   "version": "1.0.0",
   "description": "A read-only SQL-like interface for docker v2 registry",
@@ -9,22 +9,27 @@
     "build": "tsc",
     "build:docs": "./node_modules/spectacle-docs/bin/spectacle.js -d ./openapi.json -t ./docs",
     "prestart": "npm run build",
-    "start": "export NODE_ENV=development;node .",
-    "start:watch": "export NODE_ENV=development;nodemon",
-    "tests": "export NODE_ENV=test;mocha -r ts-node/register tests/*.spec.ts",
-    "tests:coverage": "export NODE_ENV=test;nyc mocha -r ts-node/register tests/*.spec.ts"
+    "start": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/docker-registry-config.json;node .",
+    "start:watch": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/docker-registry-config.json;nodemon",
+    "tests": "export NODE_ENV=test;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/docker-registry-config.json;mocha -r ts-node/register tests/*.spec.ts",
+    "tests:coverage": "export NODE_ENV=test;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/docker-registry-config.json;nyc mocha -r ts-node/register tests/*.spec.ts"
   },
   "license": "MIT",
   "dependencies": {
+    "@types/console-stamp": "^0.2.33",
     "@types/cors": "^2.8.7",
     "@types/figlet": "^1.2.0",
     "@types/ua-parser-js": "^0.7.33",
+    "@types/valid-url": "^1.0.3",
     "@types/validator": "^12.0.1",
     "axios": "^0.19.2",
+    "console-stamp": "^0.2.9",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "figlet": "^1.5.0",
-    "node-sqlparser": "^1.0.4"
+    "fs": "^0.0.1-security",
+    "node-sqlparser": "^1.0.4",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "@types/chai": "^4.2.12",

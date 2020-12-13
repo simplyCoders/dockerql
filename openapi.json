@@ -102,7 +102,7 @@
                         "in": "query",
                         "name": "query",
                         "description": "SQL like query string",
-                        "example": "SELECT * FROM pods",
+                        "example": "SELECT * FROM repos",
                         "schema": {
                             "type": "string"
                         }
