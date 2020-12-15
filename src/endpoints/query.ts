@@ -1,19 +1,19 @@
 "use strict"
 import * as express from "express"
 import * as sqlparser from "node-sqlparser"
+import * as config from "../config"
 
-const tables = ["pods", "cluster-info"]
 // Perform query
-export const query = (req: express.Request, res: express.Response) => {
+export const query = async (req: express.Request, res: express.Response) => {
 
         // Get the query parameter
         const sql = req.query.query
-        console.log("query:" + sql)
+        console.log("Request:" + sql)
 
         // Parse query
         try {
                 const ast = sqlparser.parse(sql)
-                console.log(ast)
+                console.log("ACT:\n",ast)
 
                 // support only SELECT statements
                 if (ast.type !== "select") {
@@ -23,17 +23,29 @@ export const query = (req: express.Request, res: express.Response) => {
                 }
 
                 // support only SELECT statements
-                if (tables.find(ast.from[0].table)) {
+                const tableName = ast.from[0].table
+                if (!config.tables.has(tableName)) {
                         res.status(404)
                         res.json({ code: 404, message: "Table \""+ ast.from[0].table +"\" not found." })
                         return
                 }
 
+                // perform the query
+                const resultSet = await config.tables.get(tableName)(ast.where)
+                res.status(200)
+                res.json({
+                        code: 200,
+                        message: "Query executed successfully.",
+                        count: resultSet.length,
+                        data: resultSet
+                })
+                return resultSet
+
         } catch (err) {
-                res.status(400)
-                res.json({ code: 400, message: err.message})
+                const code = typeof(err.code)!=="undefined" ? err.code : 400
+                const msg = typeof(err.message)!=="undefined" ? err.message : "Internal error."
+                res.status(code)
+                res.json({ code, message: msg})
                 return
         }
-
-        res.json({ message: "Hello World!" })
 }
