@@ -1,7 +1,7 @@
 "use strict"
 import axios from "axios"
 
-import { Context } from "./context"
+import { context } from "./context"
 
 // Get a simple where clause and extract column name and value
 const getColumnValue = (where: any, message: string) => {
@@ -54,13 +54,13 @@ export const getTags = async (where: any): Promise<any[]> => {
     const namespace = (left.column==="namespace") ? left.value : right.value
     const repo = (left.column==="repo") ? left.value : right.value
 
-    const endpoint = Context.baseEndpoint + "repositories/" + namespace + "/" + repo + "/tags/"
+    const endpoint = context.host + "repositories/" + namespace + "/" + repo + "/tags/"
 
     try {
         const resp = await axios.get(endpoint,
             {
                 headers: {
-                    authorization: "Bearer " + Context.token
+                    authorization: "Bearer " + context.token
                 }
             })
         const records = resp.data.results

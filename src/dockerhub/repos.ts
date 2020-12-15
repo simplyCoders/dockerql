@@ -1,7 +1,7 @@
 "use strict"
 import axios from "axios"
 
-import { Context } from "./context"
+import { context } from "./context"
 
 // perform get all repos
 export const getRepos = async (where: any): Promise<any[]> => {
@@ -22,13 +22,13 @@ export const getRepos = async (where: any): Promise<any[]> => {
     }
 
     const namespace = (where.left.type==="string") ? where.left.value : where.right.value
-    const endpoint = Context.baseEndpoint + "repositories/" + namespace + "/"
+    const endpoint = context.host + "repositories/" + namespace + "/"
 
     try {
         const resp = await axios.get(endpoint,
             {
                 headers: {
-                    authorization: "Bearer " + Context.token
+                    authorization: "Bearer " + context.token
                 }
             })
         const records = resp.data.results

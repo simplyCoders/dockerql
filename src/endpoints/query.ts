@@ -1,14 +1,7 @@
 "use strict"
 import * as express from "express"
 import * as sqlparser from "node-sqlparser"
-import * as dockerRegistry from "../docker-registry-v2"
-
-const tables: Map <string,(parm?: string) => Promise<string[]>> = new Map ([
-        ["namespaces", dockerRegistry.getNamespaces],
-        ["repos", dockerRegistry.getRepos],
-        ["tags", dockerRegistry.getTags],
-        ["whoami", dockerRegistry.whoAmI]
-])
+import * as config from "../config"
 
 // Perform query
 export const query = async (req: express.Request, res: express.Response) => {
@@ -31,14 +24,14 @@ export const query = async (req: express.Request, res: express.Response) => {
 
                 // support only SELECT statements
                 const tableName = ast.from[0].table
-                if (!tables.has(tableName)) {
+                if (!config.tables.has(tableName)) {
                         res.status(404)
                         res.json({ code: 404, message: "Table \""+ ast.from[0].table +"\" not found." })
                         return
                 }
 
                 // perform the query
-                const resultSet = await tables.get(tableName)(ast.where)
+                const resultSet = await config.tables.get(tableName)(ast.where)
                 res.status(200)
                 res.json({
                         code: 200,

@@ -6,10 +6,13 @@ import consoleStamp from "console-stamp"
 
 import { query } from "./endpoints/query"
 import * as config from "./config"
-import * as dockerRegistry from "./docker-registry-v2"
 
 // setup console to include timestamp
 consoleStamp (console, { pattern: 'dd/mm/yyyy HH:MM:ss.l' })
+
+// Print banner
+console.log(figlet.textSync("dockerQL"))
+config.init()
 
 // Main server rounter
 export const server = () => {
@@ -28,12 +31,7 @@ export const server = () => {
     return app
 }
 
-// Print banner
-console.log(figlet.textSync("docker-registry-query"))
-config.echo()
-dockerRegistry.init()
-
-// Start the server if not in test mode
+// Start the server (if this is not a test mode)
 if (config.env !== "test") {
     const port = process.env.PORT || 8080 // default port to listen
     const app = server()

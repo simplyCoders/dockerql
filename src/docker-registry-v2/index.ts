@@ -1,5 +1,0 @@
-export * from "./auth"
-export * from "./namespaces"
-export * from "./repos"
-export * from "./tags"
-export * from "./whoami"

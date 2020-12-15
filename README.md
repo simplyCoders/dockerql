@@ -39,17 +39,31 @@ The following example access docker hub.
 
 ~~~
 {
-    "type": "dockerV2",
-    "endpoint": "https://hub.docker.com/v2",
+    "type": "dockerhub",
     "username": {username},
     "password": {password}
 }
 ~~~
 
-## Sample SQL statements
+## GCP
+
+1. In the command line: ```gcloud auth print-identity-token```
+2. Copy the token to the config file
+~~~
+{
+    "type": "gcr",
+    "host": {hostname},
+    "jsonkey": {jsonkey}
+}
+~~~
+where {hostname} is gcr.io, us.gcr.io, eu.gcr.io, or asia.gcr.io.
+and   {jsonkey} is a gcp service account with permissions Project Browser, Storage Object Viewer on the GCS bucket for the container registry (bucket name: artifacts.<your-project>.appspot.com).
+
+## Available SQL statements
 
 ~~~
 SELECT * FROM namespaces
 SELECT * FROM repos WHERE namespace = {namespace}
 SELECT * FROM tags WHERE namespace = {namespace} AND repo = {repo}
+SELECT * FROM whoami
 ~~~

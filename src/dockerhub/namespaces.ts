@@ -1,7 +1,7 @@
 "use strict"
 import axios from "axios"
 
-import { Context } from "./context"
+import { context } from "./context"
 
 // perform get all tags
 export const getNamespaces = async (where:any): Promise<any[]> => {
@@ -9,11 +9,11 @@ export const getNamespaces = async (where:any): Promise<any[]> => {
     if (where!==null) {
         throw ({message: "Query the \"Namespaces\" table does not support the WHERE clause."})
     }
-    const endpoint = Context.baseEndpoint + "repositories/namespaces/"
+    const endpoint = context.host + "repositories/namespaces/"
     const resp = await axios.get(endpoint,
         {
             headers: {
-                authorization: "Bearer " + Context.token
+                authorization: "Bearer " + context.token
             }
         })
     const records: any[] = []

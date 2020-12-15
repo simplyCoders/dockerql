@@ -9,10 +9,11 @@
     "build": "tsc",
     "build:docs": "./node_modules/spectacle-docs/bin/spectacle.js -d ./openapi.json -t ./docs",
     "prestart": "npm run build",
-    "start": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/docker-registry-config.json;node .",
-    "start:watch": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/docker-registry-config.json;nodemon",
-    "tests": "export NODE_ENV=test;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/docker-registry-config.json;mocha -r ts-node/register tests/*.spec.ts",
-    "tests:coverage": "export NODE_ENV=test;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/docker-registry-config.json;nyc mocha -r ts-node/register tests/*.spec.ts"
+    "start": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/dockerhub.json;node .",
+    "start:watch": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/dockerhub.json;nodemon",
+    "start:gcp": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/gcr.json;nodemon",
+    "tests": "export NODE_ENV=test;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/dockerhub.json;mocha -r ts-node/register tests/*.spec.ts",
+    "tests:coverage": "export NODE_ENV=test;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/dockerhub.json;nyc mocha -r ts-node/register tests/*.spec.ts"
   },
   "license": "MIT",
   "dependencies": {
