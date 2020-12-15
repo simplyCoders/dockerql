@@ -1,6 +1,6 @@
-# docker-registry-query
+# dockerQL
 
-A read-only SQL-like interface for docker v2 registry
+A read-only SQL-like interface for docker registries.
 
 ## Why
 
