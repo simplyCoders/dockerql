@@ -17,8 +17,8 @@ SELECT * FROM tags WHERE registry = {registry} AND repo = {repo}
 
 ## Other docs 
 
-* [API Docs](https://github.com/simplyCoders/dockerQL/blob/main/openapi.html)
-* [Table schema](https://github.com/simplyCoders/dockerQL/blob/main/schema.html)
+* [API Docs](https://raw.githubusercontent.com/simplyCoders/dockerQL/master/blob/main/openapi.html)
+* [Table schema](https://raw.githubusercontent.com/simplyCoders/dockerQL/master/blob/main/schema.html)
 
 ## How to use
 
