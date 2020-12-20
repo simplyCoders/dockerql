@@ -12,7 +12,7 @@ import * as registries from "./registries"
 consoleStamp (console, { pattern: 'dd/mm/yyyy HH:MM:ss.l' })
 
 // Print banner
-console.log(figlet.textSync("dockerQL"))
+console.log(figlet.textSync("dockerql"))
 config.echo()
 registries.init(config.registries)
 

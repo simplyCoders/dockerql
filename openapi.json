@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.2",
     "info": {
-        "title": "dockerQL",
+        "title": "dockerql",
         "description": "A read-only SQL-like interface for docker registries. See below both API list and database schema.",
         "license": {
             "name": "MIT",

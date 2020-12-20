@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.2",
     "info": {
-        "title": "dockerQL - Schema",
+        "title": "dockerql - Schema",
         "description": "A read-only SQL-like interface for docker registries. The table schema.",
         "license": {
             "name": "MIT",
