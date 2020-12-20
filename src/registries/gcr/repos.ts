@@ -13,7 +13,16 @@ export const getRepos = async (context:any): Promise<any[]> => {
                     authorization: "Bearer " + context.token
                 }
             })
-        const records = resp.data.repositories
+        const records = []
+        for (const name of resp.data.repositories) {
+            records.push ({
+                "registry": context.name,
+                "repo": name,
+                "description": "", // no access to the description
+                "isPrivate": true, // gcr repos are assumed private
+                "updated": "" // no access to the last update
+            })
+        }
         console.log("Get repos successfull. Count:", records.length)
         return records
     } catch (err) {

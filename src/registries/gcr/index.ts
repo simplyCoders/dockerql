@@ -2,8 +2,7 @@
 import axios from "axios"
 
 export * from "./repos"
-export * from "./tags"
-export * from "./whoami"
+export * from "./images"
 
 export const type = "gcr"
 

@@ -1,8 +1,8 @@
 "use strict"
 import axios from "axios"
 
-// perform get all tags
-export const getTags = async (context: any, repo:string): Promise<any[]> => {
+// perform get images
+export const getImages = async (context: any, repo:string): Promise<any[]> => {
 
     const endpoint = context.host + "repositories/" + context.namespace + "/" + repo + "/tags/"
 
@@ -23,12 +23,12 @@ export const getTags = async (context: any, repo:string): Promise<any[]> => {
                 "tag": manifest.name,
                 "size": manifest.full_size,
                 "created": manifest.tag_last_pushed,
-                "uploaded": manifest.tag_last_pushed,
-                "read": manifest.tag_last_pulled
+                "pushed": manifest.tag_last_pushed,
+                "pulled": manifest.tag_last_pulled
             })
         }
 
-        console.log("Get tags successfull. Count:", records.length)
+        console.log("Get images successfull. Count:", records.length)
         return records
     } catch (err) {
         console.error(JSON.stringify(err).substr(0,800))

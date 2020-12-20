@@ -1,0 +1,96 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "dockerQL - Schema",
+        "description": "A read-only SQL-like interface for docker registries. The table schema.",
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/simplyCoders/dockerquery/blob/main/LICENSE"
+        },
+        "version": "0.0.1"
+    },
+    "components": {
+        "schemas": {
+            "registries": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the registry as defined in the $DOCKER_REGISTRIES_FILE."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The registry type. Currently dockerhub or gcr."
+                    },
+                    "namespace": {
+                        "type": "string",
+                        "description": "The registry type specific sub category selectign the registry instance. Dockerhub mapped to Organization, GCR mapped to hostname such as eu.gcr.io."
+                    }
+                }
+            },
+            "repos": {
+                "type": "object",
+                "properties": {
+                    "registry": {
+                        "type": "string",
+                        "description": "The name of the registry as defined in the $DOCKER_REGISTRIES_FILE."
+                    },
+                    "repo": {
+                        "type": "string",
+                        "description": "The name of the repo."
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The repo description. Dockerhub only."
+                    },
+                    "isPrivate": {
+                        "type": "boolean",
+                        "description": "Is this repo private?. Dockerhub only."
+                    },
+                    "updated": {
+                        "type": "string",
+                        "description": "Last updated date of the repo in simplified extended ISO format (ISO 8601). Dockerhub only."
+                    }
+                }
+            },
+            "images": {
+                "type": "object",
+                "properties": {
+                    "registry": {
+                        "type": "string",
+                        "description": "The name of the registry as defined in the $DOCKER_REGISTRIES_FILE."
+                    },
+                    "repo": {
+                        "type": "string",
+                        "description": "The name of the repo."
+                    },
+                    "digest": {
+                        "type": "string",
+                        "description": "sha256 representing uniquely the image."
+                    },
+                    "tag": {
+                        "type": "string",
+                        "description": "Tag name if one was assigned to the image."
+                    },
+                    "size": {
+                        "type": "number",
+                        "description": "Size in bytes of the image."
+                    },
+                    "created": {
+                        "type": "string",
+                        "description": "Creation date of the image in simplified extended ISO format (ISO 8601)."
+                    },
+                    "pushed": {
+                        "type": "string",
+                        "description": "Last datetime the image was pushed in simplified extended ISO format (ISO 8601)."
+                    },
+                    "pulled": {
+                        "type": "string",
+                        "description": "Last datetime the image was pulled. Dockerhub only."
+                    }
+                }
+            }
+        }
+    },
+    "paths": {}
+}

@@ -71,23 +71,6 @@ const analyzeSimpleWhere = (where: any, throwMessage: any) => {
 }
 
 // ----------------------------------------------
-// WhoAmI - information about the registry
-// ----------------------------------------------
-export const whoami = async (where: any): Promise<any[]> => {
-    const throwMessage = { message: "Query the \"whoami\" table must include a WHERE clause in the form: WHERE registry = \"{{registry}}\"." }
-    const simpleWhere = analyzeSimpleWhere(where, throwMessage)
-    if (simpleWhere.column !== "registry") {
-        throw throwMessage
-    }
-
-    const name = simpleWhere.value
-    const context = registries.get(name)
-    const type = context.type
-    const registry = registryTypes.get(type)
-    return registry.whoami(context)
-}
-
-// ----------------------------------------------
 // getRepos
 // ----------------------------------------------
 export const getRepos = async (where: any): Promise<any[]> => {
@@ -106,11 +89,11 @@ export const getRepos = async (where: any): Promise<any[]> => {
 }
 
 // ----------------------------------------------
-// getTags
+// getImages
 // ----------------------------------------------
-export const getTags = async (where: any): Promise<any[]> => {
+export const getImages = async (where: any): Promise<any[]> => {
 
-    const throwMessage = { message: "Query the \"Tags\" table must include a WHERE clause in the form: WHERE registry = \"{{registry]}}\" AND repo = \"{{repo}}\"." }
+    const throwMessage = { message: "Query the \"Images\" table must include a WHERE clause in the form: WHERE registry = \"{{registry]}}\" AND repo = \"{{repo}}\"." }
 
     // where clause analysis
     if (where === null) {
@@ -138,5 +121,5 @@ export const getTags = async (where: any): Promise<any[]> => {
     const context = registries.get(name)
     const type = context.type
     const registry = registryTypes.get(type)
-    return registry.getTags(context, repo)
+    return registry.getImages(context, repo)
 }

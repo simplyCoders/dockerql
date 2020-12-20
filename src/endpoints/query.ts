@@ -1,15 +1,13 @@
 "use strict"
 import * as express from "express"
 import * as sqlparser from "node-sqlparser"
-import {getRegistries, getRepos, getTags, whoami} from "../registries"
+import {getRegistries, getRepos, getImages} from "../registries"
 
 // database schema
 export const tables: Map<string, any> = new Map([])
 tables.set("registries", getRegistries)
 tables.set("repos", getRepos)
-tables.set("tags", getTags)
-tables.set("whoami", whoami)
-
+tables.set("images", getImages)
 
 // Perform query
 export const query = async (req: express.Request, res: express.Response) => {
