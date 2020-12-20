@@ -1,11 +1,12 @@
-# dockerQL
+# dockerql
 
 A read-only SQL-like interface for docker registries.
+Currently this project is under development and is ready for experienmentation usage only.
 
 ## Why
 
 SQL-like query interfaces is still one of the easiest to understand and most used interface to query databases. We are still missing something like that for docker registries. 
-In addition, each docker implementation is a bit different in terms of its authentication, scoping, and to some degreee its features. dockerQL provides a unified yet extendable way to access multiple types of registries. 
+In addition, each docker implementation is a bit different in terms of its authentication, scoping, and to some degreee its features. dockerql provides a unified yet extendable way to access multiple types of registries. 
 
 ## Supported SQL statements
 
@@ -14,11 +15,6 @@ SELECT * FROM registries
 SELECT * FROM repos WHERE registry = {registry}
 SELECT * FROM tags WHERE registry = {registry} AND repo = {repo}
 ~~~
-
-## Other docs 
-
-* [API Docs](https://github.com/simplyCoders/dockerQL/blob/main/openapi.html)
-* [Table schema](https://github.com/simplyCoders/dockerQL/blob/main/schema.html)
 
 ## How to use
 
@@ -39,17 +35,18 @@ Few things we can say about the project:
 2. Built with Node.JS, TypeScript, OpenAPI, and multiple OSS packages that makes development life better.
 3. Packaged as a container image and can ge deployed easily in a kubernetes or other docker envrionments. 
 
-## Authentication to dockerQL
+## Authentication to dockerql
 
-dockerQL is a read-only service that is open for annonymous user. There is no native support for authentication to the service. 
-The assumption is that the dockerQL is started in a "safe" place, security is handled by your choice of tools before readhing the service.  
+dockerql is a read-only service that is open for annonymous user. There is no native support for authentication to the service. 
+The assumption is that the dockerql is started in a "safe" place, security is handled by your choice of tools before readhing the service.  
 
 ## Authentication to Registires
 
-dockerQL leverage behind the scenes various apis to connect and interact with docker registries. The credentials to authenticate to these docker registries are defined either in an env virable or in a config json file. If both are setup then the env variable wins. 
+dockerql leverage behind the scenes various apis to connect and interact with docker registries. The credentials to authenticate to these docker registries are defined either in an env virable or in a config json file. If both are setup then the env variable wins. 
 
 1. First option: Env variable called: "DOCKER_REGISTRIES" contains json document with the configuration. 
-1. Second option: Env variable called: "DOCKER_REGISTRIES_FILE" points to the location of the configuration file. Default location is assumed "./registries.json".
+1. Second option: Env variable called: "DOCKER_REGISTRIES_FILE" points to the location of the configuration file. Default location is assumed "./.registries.json".
+1. If none provided then a default list of registries will be used, providing annonymous access to dockerhub to the docker organization.
 
 ## Config file for Docker Hub
 
@@ -57,7 +54,7 @@ The following example access docker hub.
 
 ~~~
 {
-  "Registries": [
+  "registries": [
     {
       "name": {displayname},
       "type": "dockerhub",
@@ -78,7 +75,7 @@ The following example access docker hub.
 
 ~~~
 {
-  "Registries": [
+  "registries": [
     {
       "name": {name},
       "type": "gcr",
