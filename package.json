@@ -1,19 +1,18 @@
 {
   "name": "docker-registry-rquery",
   "author": "simplyCoders",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A read-only SQL-like interface for docker v2 registry",
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
-    "build:docs": "./node_modules/spectacle-docs/bin/spectacle.js -d ./openapi.json -t ./docs",
+    "build:docs": "./node_modules/redoc-cli/index.js bundle ./openapi.json -o ./openapi.html;./node_modules/redoc-cli/index.js bundle ./schema.json -o ./schema.html",
     "prestart": "npm run build",
-    "start": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/dockerhub.json;node .",
-    "start:watch": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/dockerhub.json;nodemon",
-    "start:gcp": "export NODE_ENV=development;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/gcr.json;nodemon",
-    "tests": "export NODE_ENV=test;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/dockerhub.json;mocha -r ts-node/register tests/*.spec.ts",
-    "tests:coverage": "export NODE_ENV=test;export DOCKER_REGISTRY_CONFIG_FILE=/Users/ez/Documents/dockerhub.json;nyc mocha -r ts-node/register tests/*.spec.ts"
+    "start": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;node .",
+    "start:watch": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;nodemon",
+    "tests": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;mocha -r ts-node/register tests/*.spec.ts",
+    "tests:coverage": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;nyc mocha -r ts-node/register tests/*.spec.ts"
   },
   "license": "MIT",
   "dependencies": {
@@ -30,6 +29,7 @@
     "figlet": "^1.5.0",
     "fs": "^0.0.1-security",
     "node-sqlparser": "^1.0.4",
+    "redoc-cli": "^0.10.2",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
@@ -46,7 +46,6 @@
     "mocha": "^7.1.1",
     "nock": "^12.0.3",
     "nyc": "^15.0.0",
-    "spectacle-docs": "^1.1.0",
     "supertest": "^4.0.2",
     "ts-node": "^8.7.0",
     "tslint": "^6.1.3",

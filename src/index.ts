@@ -4,15 +4,17 @@ import cors from "cors"
 import figlet from "figlet"
 import consoleStamp from "console-stamp"
 
-import { query } from "./endpoints/query"
 import * as config from "./config"
+import { query } from "./endpoints/query"
+import * as registries from "./registries"
 
 // setup console to include timestamp
 consoleStamp (console, { pattern: 'dd/mm/yyyy HH:MM:ss.l' })
 
 // Print banner
 console.log(figlet.textSync("dockerQL"))
-config.init()
+config.echo()
+registries.init(config.registries)
 
 // Main server rounter
 export const server = () => {
