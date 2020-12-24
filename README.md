@@ -1,17 +1,20 @@
 # dockerql
 
+> :warning: **The project is under active development**: Be careful how you use it at this time.  
+
 A read-only SQL-like interface for docker registries.
 Currently this project is under development and is ready for experienmentation usage only.
 
 ## Why
 
 SQL-like query interfaces is still one of the easiest to understand and most used interface to query databases. We are still missing something like that for docker registries. 
-In addition, each docker implementation is a bit different in terms of its authentication, scoping, and to some degreee its features. dockerql provides a unified yet extendable way to access multiple types of registries. 
+In addition, each docker implementation is a bit different in terms of its authentication, scoping, and features. dockerql provides a unified yet extendable way to access multiple types of registries. 
 
 ## Supported SQL statements
 
 ~~~
 SELECT * FROM registries
+SELECT * FROM namespaces WHERE registry = {registry}
 SELECT * FROM repos WHERE registry = {registry}
 SELECT * FROM tags WHERE registry = {registry} AND repo = {repo}
 ~~~
@@ -30,9 +33,9 @@ The following example access docker hub.
   "default-registry": {registryName},
   "registries": [
     {
-      "name": {displayname},
+      "name": {registryName},
       "type": "dockerhub",
-      "default-namespace": {namespace},
+      "namespace": {namespace},
       "username": {username},
       "password": {password}
     }
@@ -42,8 +45,8 @@ The following example access docker hub.
 
 * Paranmeters:
 
-{name} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
-{namespcae} is sometime called "organization", either the user name, or a name of one of the organizations in dockerhub the user is a memeber of. 
+{registryName} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
+{namespcae} optional parameter. It is sometime called "organization", either the user name, or a name of one of the organizations in dockerhub the user is a memeber of. 
 
 ### Config file for Google Container Registry (GCR)
 
@@ -52,9 +55,9 @@ The following example access docker hub.
   "default-registry": {registryName},
   "registries": [
     {
-      "name": {name},
+      "name": {registryName},
       "type": "gcr",
-      "default-namespace": {namespace},
+      "namespace": {namespace},
       "jsonkey": {jsonkey}
     }
   ]
@@ -63,8 +66,8 @@ The following example access docker hub.
 
 * Paranmeters:
 
-{name} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
-{namespcae} is sometimes called "hostname" by the GCR docs. It must be one of gcr.io, us.gcr.io, eu.gcr.io, or asia.gcr.io.
+{registryName} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
+{namespcae} optional parameter. It is sometime called "organization", either the user name, or a name of one of the organizations in dockerhub the user is a memeber of. 
 {jsonkey} is a gcp service account with permissions Project Browser, Storage Object Viewer on the GCS bucket for the container registry (bucket name: artifacts.<your-project>.appspot.com).
 
 ## Running inside Kubernetes
@@ -74,7 +77,7 @@ The following example access docker hub.
 kubectl create secret dockerdl-registry "$(cat ~/.registry.json)" 
 ~~~
 
-2. Define a kub pod for dockerql
+2. Define a kube pod for dockerql
 
 
 ## Technology
@@ -87,8 +90,8 @@ Few things we can say about the project:
 
 ## Authentication to dockerql
 
-dockerql is a read-only service that is open for annonymous user. There is no native support for authentication to the service. 
-The assumption is that the dockerql is started in a "safe" place, security is handled by your choice of tools before readhing the service.  
+dockerql is a read-only service that is open for any user with access to the service. There is no native support for authentication to the service. 
+The assumption is that the dockerql is started in a "safe" place, security is handled by your choice of tools before reaching the docekrql service.  
 
 ## Authentication to Registires
 
@@ -97,5 +100,3 @@ dockerql leverage behind the scenes various apis to connect and interact with do
 1. First option: Env variable called: "DOCKER_REGISTRIES" contains json document with the configuration. 
 1. Second option: Env variable called: "DOCKER_REGISTRIES_FILE" points to the location of the configuration file. Default location is assumed "./.registries.json".
 1. If none provided then a default list of registries will be used, providing annonymous access to dockerhub to the docker organization.
-
-## Sketchbook
