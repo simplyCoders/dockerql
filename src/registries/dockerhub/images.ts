@@ -2,9 +2,9 @@
 import axios from "axios"
 
 // perform get images
-export const getImages = async (context: any, repo:string): Promise<any[]> => {
+export const getImages = async (context: any, namespace: string, repo:string): Promise<any[]> => {
 
-    const endpoint = context.host + "repositories/" + context.namespace + "/" + repo + "/tags/"
+    const endpoint = context.host + "repositories/" + namespace + "/" + repo + "/tags/"
 
     try {
         const resp = await axios.get(endpoint,
@@ -18,6 +18,7 @@ export const getImages = async (context: any, repo:string): Promise<any[]> => {
         for (const manifest of resp.data.results) {
             records.push ({
                 "registry": context.name,
+                "namespace": namespace,
                 "repo": repo,
                 "digest": manifest.images.length===0 ? "" : manifest.images[0].digest,
                 "tag": manifest.name,

@@ -1,13 +1,7 @@
 "use strict"
 import * as express from "express"
 import * as sqlparser from "node-sqlparser"
-import {getRegistries, getRepos, getImages} from "../registries"
-
-// database schema
-export const tables: Map<string, any> = new Map([])
-tables.set("registries", getRegistries)
-tables.set("repos", getRepos)
-tables.set("images", getImages)
+import {getTable} from "../registries"
 
 // Perform query
 export const query = async (req: express.Request, res: express.Response) => {
@@ -28,16 +22,9 @@ export const query = async (req: express.Request, res: express.Response) => {
                         return
                 }
 
-                // support only SELECT statements
-                const tableName = ast.from[0].table
-                if (!tables.has(tableName)) {
-                        res.status(404)
-                        res.json({ code: 404, message: "Table \""+ ast.from[0].table +"\" not found." })
-                        return
-                }
-
                 // perform the query
-                const resultSet = await tables.get(tableName)(ast.where)
+                const tableName = ast.from[0].table.toLowerCase()
+                const resultSet = await getTable(tableName, ast.where)
                 res.status(200)
                 res.json({
                         code: 200,
