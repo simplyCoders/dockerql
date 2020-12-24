@@ -10,116 +10,165 @@ registryTypes.set(dockerhub.type, dockerhub)
 registryTypes.set(gcr.type, gcr)
 
 const registries: Map<string, any> = new Map([])
+let defaultRegistry = "dockerhub"
 
 // ----------------------------------------------
 // init
 // ----------------------------------------------
-export const init = async (registriesConfig: any[]) => {
+export const init = async (config: any) => {
 
-    for (const config of registriesConfig) {
-        config.type = config.type.toLowerCase()
-        if (!registryTypes.has(config.type)) {
-            const err = "ERROR! Docker registries config file includes unsupported registry type." + config.name + ":" + config.type + "."
+    defaultRegistry = config.defaultRegistry
+    for (const registryConfig of config.registries) {
+        config.type = registryConfig.type.toLowerCase()
+        if (!registryTypes.has(registryConfig.type)) {
+            const err = "ERROR! Docker registries config file includes unsupported registry type." + registryConfig.name + ":" + registryConfig.type + "."
             console.log(err)
             throw ({ message: err })
         }
-        const registry = registryTypes.get(config.type)
-        const context = await registry.init(config)
-        registries.set(config.name, context)
+        const registry = registryTypes.get(registryConfig.type)
+        const context = await registry.init(registryConfig)
+        registries.set(registryConfig.name, context)
+    }
+}
+
+// ----------------------------------------------
+// Helper function: Break a simple where clause and extract column name and value
+// Make validation for everything and make sure the column is in the list of supportedColumns
+// ----------------------------------------------
+const analyzeSimpleWhere = (where: any, supportedColumns: string[], throwMessage: any) => {
+
+    // where clause must not be empty
+    if (where === null) {
+        throw (throwMessage)
+    }
+    // operator must be "="
+    if (where.operator !== "=") {
+        throw (throwMessage)
+    }
+
+    // comarison must be between a column and a string
+    if (!(where.left.type === "column_ref" && where.right.type === "string"
+        || where.left.type === "string" && where.right.type === "column_ref")) {
+        throw (throwMessage)
+    }
+
+    // get column name and comparion value
+    const column = (where.left.type === "column_ref") ? where.left.column.toLowerCase() : where.right.column.toLowerCase()
+    const value = (where.left.type === "string") ? where.left.value : where.right.value
+
+    // column must be one of the supportedColumns
+    if (!supportedColumns.includes(column)) {
+        throw (throwMessage)
+    }
+
+    const result:any = {}
+    result[column] = value
+    return result
+}
+
+// ----------------------------------------------
+// Helper function: Scan an entire where clause for column names and comparison values
+// ----------------------------------------------
+const analyzeWhere = (where: any, supportedColumns: string[], throwMessage: any): any => {
+    if (where===null) {
+        return {}
+    }
+
+    if (where.operator === "AND") {
+        return Object.assign (analyzeWhere (where.left, supportedColumns, throwMessage), analyzeWhere (where.right, supportedColumns, throwMessage))
+    }
+
+    return analyzeSimpleWhere(where, supportedColumns, throwMessage)
+}
+
+// ----------------------------------------------
+// rounter
+// ----------------------------------------------
+export const getTable = async (tableName: string, where: any): Promise<any[]> => {
+
+    switch (tableName) {
+        case "registries":
+            return getRegistries(where)
+        case "namespaces":
+            return getNamespace(where)
+        case "repos":
+            return getRepos(where)
+        case "images":
+            return getImages(where)
+        default:
+            throw ({ message: "Unknown table name '" + tableName + "'." })
     }
 }
 
 // ----------------------------------------------
 // getRegistries
 // ----------------------------------------------
-export const getRegistries = async (where: any): Promise<any[]> => {
-    // make sure there is no where expression for the namespace query
+const getRegistries = async (where: any): Promise<any[]> => {
     if (where !== null) {
-        throw ({ message: "Query the \"Registries\" table does not support the WHERE clause." })
+        throw ({ message: "Query the 'Registries' table does not support the WHERE clause." })
     }
     const records: any[] = []
     for (const name of registries.keys()) {
         records.push({ "name": name, "type": registries.get(name).type, "namespace": registries.get(name).namespace })
     }
-    console.log (records)
     console.log("Get registries successfull. Count:", records.length)
     return records
 }
 
 // ----------------------------------------------
-// Helper function: Break a simple where clause and extract column name and value
+// getNamespace
 // ----------------------------------------------
-const analyzeSimpleWhere = (where: any, throwMessage: any) => {
-    if (where === null) {
-        throw (throwMessage)
-    }
+const getNamespace = async (where: any): Promise<any[]> => {
 
-    if (where.operator !== "=") {
-        throw (throwMessage)
-    }
+    const throwMessage = { message: "WHERE clause for 'Namespaces' table may only include optional 'Registry' filter." }
+    const supportedColumns = ["registry"]
 
-    if ((typeof (where.left.column) === "undefined" && typeof (where.right.column) === "undefined")
-        || (typeof (where.left.column) !== "undefined" && where.left.column.toLowerCase() !== "registry" && where.left.column.toLowerCase() !== "repo")
-        || (typeof (where.right.column) !== "undefined" && where.right.column.toLowerCase() !== "registry" && where.right.column.toLowerCase() !== "repo")) {
-        throw (throwMessage)
-    }
+    const columns = analyzeWhere(where, supportedColumns, throwMessage)
 
-    const column = (where.left.type === "column_ref") ? where.left.column : where.right.column
-    const value = (where.left.type === "string") ? where.left.value : where.right.value
+    const registryName = (typeof(columns.registry)!=="undefined") ? columns.registry : defaultRegistry
+    const context = registries.get(registryName)
+    const registry = registryTypes.get(context.type)
 
-    return { "column": column, "value": value }
+    return registry.getNamespaces(context)
 }
 
 // ----------------------------------------------
 // getRepos
 // ----------------------------------------------
-export const getRepos = async (where: any): Promise<any[]> => {
+const getRepos = async (where: any): Promise<any[]> => {
 
-    const throwMessage = { message: "Query the \"Repos\" table must include a WHERE clause in the form: WHERE registry = \"{{registry}}\"." }
-    const simpleWhere = analyzeSimpleWhere(where, throwMessage)
-    if (simpleWhere.column !== "registry") {
-        throw throwMessage
-    }
+    const throwMessage = { message: "WHERE clause for 'Repos' table may only include optional 'Registry' and 'Namespace' filter." }
+    const supportedColumns = ["registry", "namespace"]
 
-    const name = simpleWhere.value
-    const context = registries.get(name)
-    const type = context.type
-    const registry = registryTypes.get(type)
-    return registry.getRepos(context)
+    const columns = analyzeWhere(where, supportedColumns, throwMessage)
+
+    const registryName = (typeof(columns.registry)!=="undefined") ? columns.registry : defaultRegistry
+    const context = registries.get(registryName)
+    const namespace = (typeof(columns.namespace)!=="undefined") ? columns.namespace : context.namespace
+    const registry = registryTypes.get(context.type)
+
+    return registry.getRepos(context, namespace)
+
 }
 
 // ----------------------------------------------
 // getImages
 // ----------------------------------------------
-export const getImages = async (where: any): Promise<any[]> => {
+const getImages = async (where: any): Promise<any[]> => {
 
-    const throwMessage = { message: "Query the \"Images\" table must include a WHERE clause in the form: WHERE registry = \"{{registry]}}\" AND repo = \"{{repo}}\"." }
+    const throwMessage = { message: "WHERE clause for 'Images' table must include 'Repo' filter and may include optional 'Registry' and 'Namespace' filter." }
+    const supportedColumns = ["registry", "namespace", "repo"]
 
-    // where clause analysis
-    if (where === null) {
-        throw (throwMessage)
+    const columns = analyzeWhere(where, supportedColumns, throwMessage)
+    if (typeof(columns.repo)==="undefined") { // WHERE clause must contain repo = {{repo}}
+        throw throwMessage
     }
 
-    if (where.operator !== "AND"
-        || typeof (where.left.operator) === "undefined"
-        || where.left.operator !== "="
-        || typeof (where.right.operator) === "undefined"
-        || where.right.operator !== "="
-    ) {
-        throw (throwMessage)
-    }
+    const registryName = (typeof(columns.registry)!=="undefined") ? columns.registry : defaultRegistry
+    const context = registries.get(registryName)
+    const namespace = (typeof(columns.namespace)!=="undefined") ? columns.namespace : context.namespace
+    const repo = columns.repo
+    const registry = registryTypes.get(context.type)
 
-    const left = analyzeSimpleWhere(where.left, throwMessage)
-    const right = analyzeSimpleWhere(where.right, throwMessage)
-
-    if (left.column === right.column) { // where must include both "registry" and "repo"
-        throw (throwMessage)
-    }
-
-    const name = (left.column === "registry") ? left.value : right.value
-    const repo = (left.column === "repo") ? left.value : right.value
-    const context = registries.get(name)
-    const type = context.type
-    const registry = registryTypes.get(type)
-    return registry.getImages(context, repo)
+    return registry.getImages(context, namespace, repo)
 }

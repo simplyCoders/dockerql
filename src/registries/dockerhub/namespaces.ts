@@ -1,10 +1,13 @@
 "use strict"
 import axios from "axios"
 
-// perform get all repos
-export const getRepos = async (context:any, namespace: string): Promise<any[]> => {
+// perform get all namespaces
+export const getNamespaces = async (context: any): Promise<any[]> => {
 
-    const endpoint = "https://" + namespace + "/v2/_catalog"
+    if (context.token === "") // if this is anonymous user then return empty list
+        return []
+
+    const endpoint = context.host + "repositories/namespaces/"
     try {
         const resp = await axios.get(endpoint,
             {
@@ -13,17 +16,17 @@ export const getRepos = async (context:any, namespace: string): Promise<any[]> =
                 }
             })
         const records = []
-        for (const name of resp.data.repositories) {
-            records.push ({
+        for (const namespace of resp.data.namespaces) {
+            records.push({
                 "registry": context.name,
-                "namespace": namespace,
-                "repo": name
+                "namespace": namespace
             })
         }
+
         console.log("Get repos successfull. Count:", records.length)
         return records
     } catch (err) {
-        console.error(JSON.stringify(err).substr(0,800))
+        console.error(JSON.stringify(err).substr(0, 800))
         throw (err)
     }
 }

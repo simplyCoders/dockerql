@@ -14,7 +14,7 @@ consoleStamp (console, { pattern: 'dd/mm/yyyy HH:MM:ss.l' })
 // Print banner
 console.log(figlet.textSync("dockerql"))
 config.echo()
-registries.init(config.registries)
+registries.init(config)
 
 // Main server rounter
 export const server = () => {
@@ -26,7 +26,6 @@ export const server = () => {
         optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
     }
     app.use(cors(corsOptions))
-
 
     // Define a route handlers for the APIs
     app.get("/v1/query", query)

@@ -2,10 +2,10 @@
 import axios from "axios"
 
 // perform get images
-export const getImages = async (context: any, repo: string): Promise<any[]> => {
+export const getImages = async (context: any, namespace:string, repo:string): Promise<any[]> => {
 
     // need to generate a new token with different scope
-    const endpointGetToken = "https://" + context.namespace + "/v2/token?scope=repository:" + context.jsonkey.project_id + "/" + repo + ":pull&service=" + context.namespace
+    const endpointGetToken = "https://" + namespace + "/v2/token?scope=repository:" + context.jsonkey.project_id + "/" + repo + ":pull&service=" + context.namespace
     const data = {
         "username": "_json_key",
         "password": JSON.stringify(context.jsonkey)
@@ -29,6 +29,7 @@ export const getImages = async (context: any, repo: string): Promise<any[]> => {
             const manifest = resp.data.manifest[digest]
             records.push ({
                 "registry": context.name,
+                "namespace": namespace,
                 "repo": repo,
                 "digest": digest,
                 "tag": manifest.tag.length===0 ? "" : manifest.tag[0],

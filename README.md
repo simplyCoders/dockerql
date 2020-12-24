@@ -16,16 +16,66 @@ SELECT * FROM repos WHERE registry = {registry}
 SELECT * FROM tags WHERE registry = {registry} AND repo = {repo}
 ~~~
 
-## How to use
+# Set up
 
-There are two main interfaces: 
+## Define your .registry.json file
+The list of registries is defined in a .registry.json file. 
 
-1. REST API. A simple endpoint called query that receives a SQL statement and returns a record set. 
-2. Mysql Proxy. A proxy interface that uses the API endpoint from above to expose a mysql endpoint. Standard tools available for mysql can work with that endpoint seamelessly. 
+### Config file for Docker Hub
 
-## Install and setup
+The following example access docker hub.
 
-todo
+~~~
+{
+  "default-registry": {registryName},
+  "registries": [
+    {
+      "name": {displayname},
+      "type": "dockerhub",
+      "default-namespace": {namespace},
+      "username": {username},
+      "password": {password}
+    }
+  ]
+}
+~~~
+
+* Paranmeters:
+
+{name} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
+{namespcae} is sometime called "organization", either the user name, or a name of one of the organizations in dockerhub the user is a memeber of. 
+
+### Config file for Google Container Registry (GCR)
+
+~~~
+{
+  "default-registry": {registryName},
+  "registries": [
+    {
+      "name": {name},
+      "type": "gcr",
+      "default-namespace": {namespace},
+      "jsonkey": {jsonkey}
+    }
+  ]
+}
+~~~
+
+* Paranmeters:
+
+{name} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
+{namespcae} is sometimes called "hostname" by the GCR docs. It must be one of gcr.io, us.gcr.io, eu.gcr.io, or asia.gcr.io.
+{jsonkey} is a gcp service account with permissions Project Browser, Storage Object Viewer on the GCS bucket for the container registry (bucket name: artifacts.<your-project>.appspot.com).
+
+## Running inside Kubernetes
+
+1. Define a secret with the registry credentials
+~~~
+kubectl create secret dockerdl-registry "$(cat ~/.registry.json)" 
+~~~
+
+2. Define a kub pod for dockerql
+
 
 ## Technology
 
@@ -47,49 +97,5 @@ dockerql leverage behind the scenes various apis to connect and interact with do
 1. First option: Env variable called: "DOCKER_REGISTRIES" contains json document with the configuration. 
 1. Second option: Env variable called: "DOCKER_REGISTRIES_FILE" points to the location of the configuration file. Default location is assumed "./.registries.json".
 1. If none provided then a default list of registries will be used, providing annonymous access to dockerhub to the docker organization.
-
-## Config file for Docker Hub
-
-The following example access docker hub.
-
-~~~
-{
-  "registries": [
-    {
-      "name": {displayname},
-      "type": "dockerhub",
-      "namespace": {namespace},
-      "username": {username},
-      "password": {password}
-    }
-  ]
-}
-~~~
-
-### Paranmeters:
-
-{name} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
-{namespcae} is sometime called "organization", either the user name, or a name of one of the organizations in dockerhub the user is a memeber of. 
-
-## Config file for Google Container Registry (GCR)
-
-~~~
-{
-  "registries": [
-    {
-      "name": {name},
-      "type": "gcr",
-      "namespace": {namespace},
-      "jsonkey": {jsonkey}
-    }
-  ]
-}
-~~~
-
-### Paranmeters:
-
-{name} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
-{namespcae} is sometimes called "hostname" by the GCR docs. It must be one of gcr.io, us.gcr.io, eu.gcr.io, or asia.gcr.io.
-{jsonkey} is a gcp service account with permissions Project Browser, Storage Object Viewer on the GCS bucket for the container registry (bucket name: artifacts.<your-project>.appspot.com).
 
 ## Sketchbook

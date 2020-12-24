@@ -24,7 +24,7 @@
                     },
                     "namespace": {
                         "type": "string",
-                        "description": "The registry type specific sub category selectign the registry instance. Dockerhub mapped to Organization, GCR mapped to hostname such as eu.gcr.io."
+                        "description": "The default namespace to be used for queries against this registry. Namespaces have different meaning for each type of registry. For Dockerhub namespaces are mapped to Organizations. While for GCR namespaces are mapped to Hostname, such as us.gcr.io."
                     }
                 }
             },
@@ -34,6 +34,10 @@
                     "registry": {
                         "type": "string",
                         "description": "The name of the registry as defined in the $DOCKER_REGISTRIES_FILE."
+                    },
+                    "namespace": {
+                        "type": "string",
+                        "description": "The namespace for the repo. Namespaces have different meaning for each type of registry. For Dockerhub namespaces are mapped to Organizations. While for GCR namespaces are mapped to Hostname, such as us.gcr.io."
                     },
                     "repo": {
                         "type": "string",
@@ -59,6 +63,10 @@
                     "registry": {
                         "type": "string",
                         "description": "The name of the registry as defined in the $DOCKER_REGISTRIES_FILE."
+                    },
+                    "namespace": {
+                        "type": "string",
+                        "description": "The namespace for the repo. Namespaces have different meaning for each type of registry. For Dockerhub namespaces are mapped to Organizations. While for GCR namespaces are mapped to Hostname, such as us.gcr.io."
                     },
                     "repo": {
                         "type": "string",
