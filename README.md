@@ -3,12 +3,21 @@
 > :warning: **The project is under active development**: Be careful how you use it at this time.  
 
 A read-only SQL-like interface for docker registries.
-Currently this project is under development and is ready for experimentation usage only.
 
 ## Why
 
 SQL-like query interfaces is still one of the easiest to understand interface to query databases. We are still missing something like that for docker registries. 
 In addition, each docker implementation is a bit different in terms of its authentication, scoping, and features. dockerql provides a unified yet extendable way to access multiple types of registries. 
+
+## Getting started
+
+The simplest way to get started with a test dockerql is via npm. Follow these steps:
+1. Create a new folder ```mkdir dockerql-test``` and cd to it.
+1. Get package from npmjs ```npm i dockerql```
+1. Run the service locally: ```cd ./node_modules/dockerql/;npm start```
+1. The service is up and running with access to dockerhub using anonymous credentials. 
+1. Open a browser and type ```http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"```
+1. If you see a JSON document with a list of repos then congrats! You have a running instance of dockerql.
 
 ## Supported registry types
 
@@ -47,16 +56,6 @@ SELECT * FROM repos WHERE registry = "my-gcr" AND namespace = "distroless"
 
 dockerql is a read-only service that is open for any user with access to the service. There is no native support for authentication to the service. 
 The assumption is that the dockerql is started in a "safe" place, security is handled by your choice of tools before reaching the docekrql service.  
-
-## Getting started
-
-The siplest way to get started with test dockerql is via npm. Follow these steps:
-1. Create a new folder ```mkdir dockerql-test``` and cd to it.
-1. Get package from npmjs ```npm i dockerql```
-1. Run the service locally: ```cd ./node_modules/dockerql/;npm start```
-1. The service is up and running with access to dockerhub using anonymous credentials. 
-1. Open a browser and type ```http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"```
-1. If you see a JSON document with a list of repos then congrats! You have a running instance of dockerql.
 
 ## Getting started for real
 Few steps to get dockerql up and running: 
