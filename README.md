@@ -12,12 +12,34 @@ In addition, each docker implementation is a bit different in terms of its authe
 ## Getting started
 
 The simplest way to get started with a test dockerql is via npm. Follow these steps:
-1. Create a new folder ```mkdir dockerql-test``` and cd to it.
-1. Get package from npmjs ```npm i dockerql```
-1. Run the service locally: ```cd ./node_modules/dockerql/;npm start```
-1. The service is up and running with access to dockerhub using anonymous credentials. 
-1. Open a browser and type ```http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"```
-1. If you see a JSON document with a list of repos then congrats! You have a running instance of dockerql.
+1. Create a new folder and cd to it.
+
+~~~bash
+mkdir dockerql-test; cd dockerql-test
+~~~
+
+2. Get the package from npm.
+
+~~~bash
+npm i dockerql
+~~~
+
+3. Run the service locally.
+
+~~~bash
+cd ./node_modules/dockerql/;npm install;npm start
+~~~~
+
+4. The service should be running and you should be able to see the following.
+
+![terminal](https://raw.githubusercontent.com/simplyCoders/dockerql/main/terminal.png)
+
+5. Click on the link below to run your first query in the browser.
+[http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"](http://localhost:8080/v1/query?query=select * from repos where namespace="alpine")
+
+
+6. Congrats! Assuming all went well then you have a running instance of dockerql.
+![browser](https://raw.githubusercontent.com/simplyCoders/dockerql/main/browser.png)
 
 ## Supported registry types
 
