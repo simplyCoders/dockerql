@@ -44,4 +44,5 @@ export const defaultRegistry = (typeof (registryConf['default-registry']) !== 'u
 export const echo = () => {
   console.info('Environment:', `'${env}'`)
   console.info('Registries count:', registries.length)
+  console.info('--------------------------------------------------')
 }
