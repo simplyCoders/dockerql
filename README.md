@@ -20,7 +20,7 @@ Currently supported:
 
 Example SQL supported queries:
 
-~~~
+~~~sql
 SELECT * FROM registries
 SELECT * FROM namespaces WHERE registry = {registry}
 SELECT * FROM repos WHERE registry = {registry} 
@@ -34,12 +34,12 @@ dockerql supports access to public repos for both dockerhub and gcr. We do that 
 Here are simple examples:
 
 * Find the repos under alpine in dockerhub
-~~~
+~~~sql
 SELECT * FROM repos WHERE registry = "my-dockerhub" AND namespace = "alpine"
 ~~~
 
 * Find the repos under distroless in gcr
-~~~
+~~~sql
 SELECT * FROM repos WHERE registry = "my-gcr" AND namespace = "distroless"
 ~~~
 
@@ -65,12 +65,12 @@ Credentials are configured in JSON format and passed to dockerql via an environm
 1. If file not found then used a built in default that set up access to dockerhub with no credentials.
 
 ## The JSON format is as follows: 
-~~~
-~~~
+~~~json
 {
     "default-registry": {{default}},
     "registries": []
 }
+~~~
 
 * {{default}} - a default registry to be used if WHERE clause does not include a registry name.
 * The registries area includes the access definition for each registry and it is dependent on the registry type.
@@ -79,7 +79,7 @@ Credentials are configured in JSON format and passed to dockerql via an environm
 
 The following example access docker hub.
 
-~~~
+~~~json
 {
   "default-registry": {registryName},
   "registries": [
@@ -99,7 +99,7 @@ The following example access docker hub.
 
 ## Configure access to Google Container Registry (GCR)
 
-~~~
+~~~json
 {
   "default-registry": {registryName},
   "registries": [
