@@ -16,7 +16,7 @@ export const getImages = async (
   defaultRegistry: string,
 ): Promise<any[]> => {
   const throwMessage = new Error('WHERE for "Images" must filter by "Repo", and may filter by "Registry", "Host" and "Namespace".')
-  const supportedColumns = ['registry', 'namespace', 'host', 'repo']
+  const supportedColumns = ['registry', 'host', 'namespace', 'repo']
 
   const columns = analyzeWhere(where, supportedColumns, throwMessage)
   if (typeof (columns.repo) === 'undefined') { // WHERE clause must contain repo = {{repo}}
