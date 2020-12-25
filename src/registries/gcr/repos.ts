@@ -11,7 +11,7 @@ export const getRepos = async (context:any, namespace: string): Promise<any[]> =
         },
       })
     const records:any[] = []
-    resp.data.repositories.array.forEach((name:string) => {
+    resp.data.repositories.forEach((name:string) => {
       records.push({
         registry: context.name,
         namespace,
