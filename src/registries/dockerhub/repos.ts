@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // perform get all repos
-export const getRepos = async (context: any, namespace: string): Promise<any[]> => {
-  const endpoint = `${context.host}repositories/${namespace}/`
+export const getRepos = async (context: any, host: string, namespace: string): Promise<any[]> => {
+  const endpoint = `https://${host}/v2/repositories/${namespace}/`
   const records:any[] = []
   try {
     let nextEndpoint = endpoint
@@ -19,6 +19,7 @@ export const getRepos = async (context: any, namespace: string): Promise<any[]> 
       resp.data.results.forEach((repo:any) => {
         records.push({
           registry: context.name,
+          host,
           namespace,
           repo: repo.name,
           description: repo.description,

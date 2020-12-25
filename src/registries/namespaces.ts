@@ -15,14 +15,15 @@ export const getNamespaces = async (
   registries: Map<string, any>,
   defaultRegistry: string,
 ): Promise<any[]> => {
-  const throwMessage = new Error('WHERE for "Namespaces" may only filter by "Registry".')
-  const supportedColumns = ['registry']
+  const throwMessage = new Error('WHERE for "Namespaces" may only filter by "Registry" and "Host".')
+  const supportedColumns = ['registry', 'host']
 
   const columns = analyzeWhere(where, supportedColumns, throwMessage)
 
   const registryName = (typeof (columns.registry) !== 'undefined') ? columns.registry : defaultRegistry
   const context = registries.get(registryName)
   const registry = registryTypes.get(context.type)
+  const host = (typeof (columns.host) !== 'undefined') ? columns.host : context.host
 
-  return registry.getNamespaces(context)
+  return registry.getNamespaces(context, host)
 }

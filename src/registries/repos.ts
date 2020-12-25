@@ -15,8 +15,8 @@ export const getRepos = async (
   registries: Map<string, any>,
   defaultRegistry: string,
 ): Promise<any[]> => {
-  const throwMessage = new Error('WHERE for "Repos" may only filter by "Registry" and "Namespace".')
-  const supportedColumns = ['registry', 'namespace']
+  const throwMessage = new Error('WHERE for "Repos" may only filter by "Registry", "Host" and "Namespace".')
+  const supportedColumns = ['registry', 'namespace', 'host']
 
   const columns = analyzeWhere(where, supportedColumns, throwMessage)
 
@@ -24,6 +24,7 @@ export const getRepos = async (
   const context = registries.get(registryName)
   const namespace = (typeof (columns.namespace) !== 'undefined') ? columns.namespace : context.namespace
   const registry = registryTypes.get(context.type)
+  const host = (typeof (columns.host) !== 'undefined') ? columns.host : context.host
 
-  return registry.getRepos(context, namespace)
+  return registry.getRepos(context, host, namespace)
 }

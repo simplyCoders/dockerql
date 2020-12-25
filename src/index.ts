@@ -7,15 +7,25 @@ import * as config from './config'
 import { query } from './endpoints/query'
 import * as registries from './registries'
 
-// setup console to include timestamp
+// ----------------------------------------------
+// Setup console to include timestamp
+// ----------------------------------------------
 consoleStamp(console, { pattern: 'dd/mm/yyyy HH:MM:ss.l' })
 
+// ----------------------------------------------
 // Print banner
+// ----------------------------------------------
 console.info(figlet.textSync('dockerql'))
 config.echo()
+
+// ----------------------------------------------
+// Init all registries defined in .registry.json
+// ----------------------------------------------
 registries.init(config)
 
+// ----------------------------------------------
 // Main server rounter
+// ----------------------------------------------
 export const server = () => {
   const app = express()
 
@@ -31,7 +41,9 @@ export const server = () => {
   return app
 }
 
+// ----------------------------------------------
 // Start the server (if this is not a test mode)
+// ----------------------------------------------
 if (config.env !== 'test') {
   const port = process.env.PORT || 8080 // default port to listen
   const app = server()

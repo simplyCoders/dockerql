@@ -3,7 +3,7 @@ import axios from 'axios'
 export const type = 'dockerhub'
 
 export const init = async (config:any): Promise<any> => {
-  const host = 'https://hub.docker.com/v2/'
+  const host = 'hub.docker.com'
 
   const tempNamespace = (typeof (config.username) !== 'undefined' && config.username !== '') ? config.username : 'docker'
   const namespace = (typeof (config.namespace) !== 'undefined') ? config.namespace : tempNamespace
@@ -22,13 +22,19 @@ export const init = async (config:any): Promise<any> => {
   }
 
   try {
-    const resp = await axios.post(`${host}users/login/`, data)
+    const resp = await axios.post(`https://${host}/v2/users/login/`, data)
     const { token } = resp.data
     const context = {
-      type, name: config.name, host, username: config.username, namespace, token,
+      type,
+      name: config.name,
+      host,
+      username: config.username,
+      namespace,
+      token,
     }
 
     console.info(`Authenticated successfully to ${config.name} (type: ${type})`)
+    console.info('Host:', host)
     console.info('Namespace:', namespace)
     console.info('User:', config.username)
 

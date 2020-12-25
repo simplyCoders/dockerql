@@ -1,15 +1,20 @@
 import axios from 'axios'
 
 // perform get images
-export const getImages = async (context: any, namespace:string, repo:string): Promise<any[]> => {
+export const getImages = async (
+  context: any,
+  host: string,
+  namespace: string,
+  repo: string,
+): Promise<any[]> => {
   // need to generate a new token with different scope
-  const endpointGetToken = `https://${namespace}/v2/token?scope=repository:${context.jsonkey.project_id}/${repo}:pull&service=${context.namespace}`
+  const endpointGetToken = `https://${host}/v2/token?scope=repository:${namespace}/${repo}:pull&service=${host}`
   const data = {
     username: '_json_key',
-    password: JSON.stringify(context.jsonkey),
+    password: JSON.stringify(context.password),
   }
 
-  const endpoint = `https://${context.namespace}/v2/${context.jsonkey.project_id}/${repo}/tags/list`
+  const endpoint = `https://${host}/v2/${namespace}/${repo}/tags/list`
 
   try {
     // generate new token for scope
@@ -22,11 +27,12 @@ export const getImages = async (context: any, namespace:string, repo:string): Pr
           authorization: `Bearer ${tempToken}`,
         },
       })
-    const records:any[] = []
+    const records: any[] = []
     Object.keys(resp.data.manifest).forEach((digest) => {
       const manifest = resp.data.manifest[digest]
       records.push({
         registry: context.name,
+        host,
         namespace,
         repo,
         digest,
@@ -34,7 +40,6 @@ export const getImages = async (context: any, namespace:string, repo:string): Pr
         size: manifest.imageSizeBytes,
         created: new Date(parseInt(manifest.timeCreatedMs, 10)).toISOString(),
         pushed: new Date(parseInt(manifest.timeUploadedMs, 10)).toISOString(),
-        pulled: '', // gcr does not report last read time
       })
     })
     console.info('Get images successfull. Count:', records.length)

@@ -15,8 +15,8 @@ export const getImages = async (
   registries: Map<string, any>,
   defaultRegistry: string,
 ): Promise<any[]> => {
-  const throwMessage = new Error('WHERE for "Images" must filter by "Repo", and may filter by "Registry" and "Namespace".')
-  const supportedColumns = ['registry', 'namespace', 'repo']
+  const throwMessage = new Error('WHERE for "Images" must filter by "Repo", and may filter by "Registry", "Host" and "Namespace".')
+  const supportedColumns = ['registry', 'namespace', 'host', 'repo']
 
   const columns = analyzeWhere(where, supportedColumns, throwMessage)
   if (typeof (columns.repo) === 'undefined') { // WHERE clause must contain repo = {{repo}}
@@ -25,9 +25,10 @@ export const getImages = async (
 
   const registryName = (typeof (columns.registry) !== 'undefined') ? columns.registry : defaultRegistry
   const context = registries.get(registryName)
+  const host = (typeof (columns.host) !== 'undefined') ? columns.host : context.host
   const namespace = (typeof (columns.namespace) !== 'undefined') ? columns.namespace : context.namespace
   const { repo } = columns
   const registry = registryTypes.get(context.type)
 
-  return registry.getImages(context, namespace, repo)
+  return registry.getImages(context, host, namespace, repo)
 }

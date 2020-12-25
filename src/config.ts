@@ -1,9 +1,8 @@
-// Auto-detect configuration
 import * as fs from 'fs'
 
-export const env = process.env.NODE_ENV || 'production'
-
-// read .registries configurations
+// ----------------------------------------------
+// read .registries.json configurations
+// ----------------------------------------------
 const defaultRegistryConf = {
   'default-registry': 'dockerhub',
   registries: [{
@@ -31,13 +30,17 @@ if (typeof (tempConf.registries) === 'undefined'
   tempConf = defaultRegistryConf
 }
 
+// ----------------------------------------------
+// exports
+// ----------------------------------------------
+export const env = process.env.NODE_ENV || 'production'
 export const registryConf = tempConf
-
-// export content of registry configuration
 export const { registries } = registryConf
 export const defaultRegistry = (typeof (registryConf['default-registry']) !== 'undefined') ? registryConf['default-registry'] : registryConf.registries[0].name
 
-// print configuration settings
+// ----------------------------------------------
+// print configuration highlights
+// ----------------------------------------------
 export const echo = () => {
   console.info('Environment:', `'${env}'`)
   console.info('Registries count:', registries.length)
