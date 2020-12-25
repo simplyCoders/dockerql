@@ -3,14 +3,22 @@
 > :warning: **The project is under active development**: Be careful how you use it at this time.  
 
 A read-only SQL-like interface for docker registries.
-Currently this project is under development and is ready for experienmentation usage only.
+Currently this project is under development and is ready for experimentation usage only.
 
 ## Why
 
-SQL-like query interfaces is still one of the easiest to understand and most used interface to query databases. We are still missing something like that for docker registries. 
+SQL-like query interfaces is still one of the easiest to understand interface to query databases. We are still missing something like that for docker registries. 
 In addition, each docker implementation is a bit different in terms of its authentication, scoping, and features. dockerql provides a unified yet extendable way to access multiple types of registries. 
 
+## Supported registry types
+
+Currently supported: 
+1. Dockerhub
+1. Google Container Registry (GCR)
+
 ## Supported SQL statements
+
+Example SQL supported queries:
 
 ~~~
 SELECT * FROM registries
@@ -44,17 +52,17 @@ The assumption is that the dockerql is started in a "safe" place, security is ha
 Few steps to get dockerql up and running: 
 
 1. Configure access to your registries.  
-1. Select a method to run dockerql as a local server from npmjs, as a standalone (docker container)[], or as (kuberneties pod)[]. 
+1. Select a method to run dockerql as a local server from npmjs, as a standalone docker container, or as kubernetes pod. Still under development. 
 1. Try the query api.
 
 ## Configure access to your registries
 
-Credentials are configured in JSON format and passed to dockerql via an environment virable or via a config file. If both are setup then the environment variable wins. 
+Credentials are configured in JSON format and passed to dockerql via an environment variable or via a config file. If both are setup then the environment variable wins. 
 
 1. Env variable called: "DOCKER_REGISTRIES" contains json document with the configuration. 
 1. if not set then using env variable called: "DOCKER_REGISTRIES_FILE" that points to the location of the configuration file. 
 1. If not set then try a default location for the configuration file at "./.registries.json".
-1. If file not found then used a built in default that setup access to dockerhub with no credentials.
+1. If file not found then used a built in default that set up access to dockerhub with no credentials.
 
 ## The JSON format is as follows: 
 ~~~
@@ -65,7 +73,7 @@ Credentials are configured in JSON format and passed to dockerql via an environm
 }
 
 * {{default}} - a default registry to be used if WHERE clause does not include a registry name.
-* The registries area includes the access definition for each registry and it is depended on the registry type.
+* The registries area includes the access definition for each registry and it is dependent on the registry type.
 
 ## Configure access to Docker Hub
 
@@ -87,7 +95,7 @@ The following example access docker hub.
 ~~~
 
 * {registryName} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
-* {namespcae} optional parameter. Mapped to dockerhub "organization". 
+* {namespace} optional parameter. Mapped to dockerhub "organization". 
 
 ## Configure access to Google Container Registry (GCR)
 
@@ -107,7 +115,7 @@ The following example access docker hub.
 ~~~
 
 * {registryName} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
-* {namespcae} optional parameter. Mapped to gcr project-id.
+* {namespace} optional parameter. Mapped to gcr project-id.
 * {jsonkey} is a gcp service account with permissions Project Browser, Storage Object Viewer on the GCS bucket for the container registry (bucket name: artifacts.<your-project>.appspot.com).
 
 ## Technology
@@ -116,7 +124,7 @@ Few things we can say about the project:
 
 1. Available as open source under the MIT license. 
 2. Built with Node.JS, TypeScript, OpenAPI, and multiple OSS packages that makes development life better.
-3. Packaged as a container image and can ge deployed easily in a kubernetes or other docker envrionments. 
+3. Packaged in multiple form factors, including a docker image. 
 
 ## Parking area
 ~~~

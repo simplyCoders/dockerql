@@ -1,0 +1,29 @@
+# Workflow to push updates to npmjs. 
+
+name: npmjs
+# trigger workflow everytime there is a merge to master branch
+on:
+  pull_request:
+    types: [ closed ]
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15
+        registry-url: https://registry.npmjs.org/
+
+    # Run the install 
+    - name: Run install
+      run: npm install
+    
+    # Publish to npm
+    - name: publish
+      run: npm publish --access private
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+  
