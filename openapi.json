@@ -27,9 +27,13 @@
                         "type": "string",
                         "description": "The registry type. Currently dockerhub or gcr."
                     },
+                    "host": {
+                        "type": "string",
+                        "description": "The default host to be used for queries against this registry. E.g 'hub.docker.com' or 'gcr.io'."
+                    },
                     "namespace": {
                         "type": "string",
-                        "description": "The default namespace to be used for queries against this registry. Namespaces have different meaning for each type of registry. For Dockerhub namespaces are mapped to Organizations. While for GCR namespaces are mapped to Hostname, such as us.gcr.io."
+                        "description": "The default namespace to be used for queries against this registry. Namespaces are mapped to organizations in dockerhub and to project-ids in GCR."
                     }
                 }
             },
@@ -38,11 +42,15 @@
                 "properties": {
                     "registry": {
                         "type": "string",
-                        "description": "The name of the registry as defined in the $DOCKER_REGISTRIES_FILE."
+                        "description": "The name of the registry."
+                    },
+                    "host": {
+                        "type": "string",
+                        "description": "The host."
                     },
                     "namespace": {
                         "type": "string",
-                        "description": "The name of the namespace. Namespaces have different meaning for each type of registry. For Dockerhub namespaces are mapped to Organizations. While for GCR namespaces are mapped to Hostname, such as us.gcr.io."
+                        "description": "The namespace."
                     }
                 }
             },
@@ -51,11 +59,15 @@
                 "properties": {
                     "registry": {
                         "type": "string",
-                        "description": "The name of the registry as defined in the $DOCKER_REGISTRIES_FILE."
+                        "description": "The name of the registry."
+                    },
+                    "host": {
+                        "type": "string",
+                        "description": "The host."
                     },
                     "namespace": {
                         "type": "string",
-                        "description": "The namespace for the repo. Namespaces have different meaning for each type of registry. For Dockerhub namespaces are mapped to Organizations. While for GCR namespaces are mapped to Hostname, such as us.gcr.io."
+                        "description": "The namespace."
                     },
                     "repo": {
                         "type": "string",
@@ -71,7 +83,7 @@
                     },
                     "updated": {
                         "type": "string",
-                        "description": "Last updated date of the repo in simplified extended ISO format (ISO 8601). Dockerhub only."
+                        "description": "Last time repo was updated (simplified extended ISO 8601). Dockerhub only."
                     }
                 }
             },
@@ -80,11 +92,15 @@
                 "properties": {
                     "registry": {
                         "type": "string",
-                        "description": "The name of the registry as defined in the $DOCKER_REGISTRIES_FILE."
+                        "description": "The name of the registry."
+                    },
+                    "host": {
+                        "type": "string",
+                        "description": "The host."
                     },
                     "namespace": {
                         "type": "string",
-                        "description": "The namespace for the repo. Namespaces have different meaning for each type of registry. For Dockerhub namespaces are mapped to Organizations. While for GCR namespaces are mapped to Hostname, such as us.gcr.io."
+                        "description": "The namespace."
                     },
                     "repo": {
                         "type": "string",
@@ -104,21 +120,21 @@
                     },
                     "created": {
                         "type": "string",
-                        "description": "Creation date of the image in simplified extended ISO format (ISO 8601)."
+                        "description": "Creation time of the image (simplified extended ISO 8601)."
                     },
                     "pushed": {
                         "type": "string",
-                        "description": "Last datetime the image was pushed in simplified extended ISO format (ISO 8601)."
+                        "description": "Last time the image was pushed (simplified extended ISO 8601). Dockerhub only."
                     },
                     "pulled": {
                         "type": "string",
-                        "description": "Last datetime the image was pulled. Dockerhub only."
+                        "description": "Last time the image was pulled (simplified extended ISO 8601). Dockerhub only."
                     }
                 }
             }
         }
     },
-     "paths": {
+    "paths": {
         "/query": {
             "get": {
                 "description": "Query endpoint, get SQL statemnent and returns array of records",
@@ -128,7 +144,7 @@
                         "in": "query",
                         "name": "query",
                         "description": "SQL like query string",
-                        "example": "SELECT * FROM repos",
+                        "example": "SELECT * FROM repos WHERE registry = \"public-gcr\" and namespace = \"distroless\"",
                         "schema": {
                             "type": "string"
                         }
@@ -136,7 +152,33 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Ok"
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "code": 200,
+                                    "message": "Query executed successfully.",
+                                    "count": 2,
+                                    "data": [
+                                        {
+                                            "registry": "public-gcr",
+                                            "host": "gcr.io",
+                                            "namespace": "distroless",
+                                            "repo": "base"
+                                        },
+                                        {
+                                            "registry": "public-gcr",
+                                            "host": "gcr.io",
+                                            "namespace": "distroless",
+                                            "repo": "base-debian10"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad request"

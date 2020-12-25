@@ -2,6 +2,7 @@
 interface RegistryRecord {
     registry: string
     type: string
+    host: string
     namespace: string
   }
 
@@ -17,6 +18,7 @@ export const getRegistries = async (where: any, registries: Map<string, any>): P
     records.push({
       registry: element.name,
       type: element.type,
+      host: element.host,
       namespace: element.namespace,
     })
   })
