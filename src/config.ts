@@ -1,37 +1,47 @@
-// Auto-detect configuration
-import * as fs from "fs"
+import * as fs from 'fs'
 
-export const env = process.env.NODE_ENV || "production"
-
-// read .registries configurations
-const defaultRegistryConf = {"default-registry":"dockerhub","registries":[{"name":"dockerhub", "type":"dockerhub","defaultNamespace":"docker","username":"","password":""}]}
-export let registryConf = defaultRegistryConf
-if (typeof (process.env.DOCKER_REGISTRIES) !== "undefined") {
-    registryConf = JSON.parse(process.env.DOCKER_REGISTRIES)
+// ----------------------------------------------
+// read .registries.json configurations
+// ----------------------------------------------
+const defaultRegistryConf = {
+  'default-registry': 'dockerhub',
+  registries: [{
+    name: 'dockerhub', type: 'dockerhub', defaultNamespace: 'docker', username: '', password: '',
+  }],
+}
+let tempConf = defaultRegistryConf
+if (typeof (process.env.DOCKER_REGISTRIES) !== 'undefined') {
+  tempConf = JSON.parse(process.env.DOCKER_REGISTRIES)
 } else {
-    const configFile = process.env.DOCKER_REGISTRIES_FILE || "./registries.json"
-        if (fs.existsSync(configFile)) {
-            registryConf = JSON.parse(fs.readFileSync(configFile).toString())
-        } else {
-            console.warn("Warning. Config file does not exists. Using annonymous access to dockerhub instead. File: "+configFile)
-            registryConf = defaultRegistryConf
-        }
+  const configFile = process.env.DOCKER_REGISTRIES_FILE || './registries.json'
+  if (fs.existsSync(configFile)) {
+    tempConf = JSON.parse(fs.readFileSync(configFile).toString())
+  } else {
+    console.warn(`Warning. Config file does not exists. Using annonymous access to dockerhub instead. File: ${configFile}`)
+    tempConf = defaultRegistryConf
+  }
 }
 
 // validate registry conf
-if (typeof(registryConf.registries)==="undefined"
-||  registryConf.registries.length===0
+if (typeof (tempConf.registries) === 'undefined'
+|| tempConf.registries.length === 0
 ) {
-    console.warn("Warning. Registry conf is not right. Using annonymous access to dockerhub instead.")
-    registryConf = defaultRegistryConf
+  console.warn('Warning. Registry conf is not right. Using annonymous access to dockerhub instead.')
+  tempConf = defaultRegistryConf
 }
 
-// export content of registry configuration
-export const registries = registryConf.registries
-export const defaultRegistry = (typeof(registryConf["default-registry"])!=="undefined") ? registryConf["default-registry"] : registryConf.registries[0].name
+// ----------------------------------------------
+// exports
+// ----------------------------------------------
+export const env = process.env.NODE_ENV || 'production'
+export const registryConf = tempConf
+export const { registries } = registryConf
+export const defaultRegistry = (typeof (registryConf['default-registry']) !== 'undefined') ? registryConf['default-registry'] : registryConf.registries[0].name
 
-// print configuration settings
+// ----------------------------------------------
+// print configuration highlights
+// ----------------------------------------------
 export const echo = () => {
-    console.log("Environment:", "'" + env + "'")
-    console.log("Registries count:", registries.length)
+  console.info('Environment:', `'${env}'`)
+  console.info('Registries count:', registries.length)
 }

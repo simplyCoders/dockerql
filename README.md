@@ -15,16 +15,59 @@ In addition, each docker implementation is a bit different in terms of its authe
 ~~~
 SELECT * FROM registries
 SELECT * FROM namespaces WHERE registry = {registry}
-SELECT * FROM repos WHERE registry = {registry}
-SELECT * FROM tags WHERE registry = {registry} AND repo = {repo}
+SELECT * FROM repos WHERE registry = {registry} 
+SELECT * FROM images WHERE registry = {registry} AND repo = {repo}
 ~~~
 
-## Set up
+## Access to public repos/images
 
-1. Define your ```.registry.json``` file
-The list of registries is defined in a .registry.json file. 
+dockerql supports access to public repos for both dockerhub and gcr. We do that by providing namespace value in the WHERE clause. 
 
-2. Config file for Docker Hub
+Here are simple examples:
+
+* Find the repos under alpine in dockerhub
+~~~
+SELECT * FROM repos WHERE registry = "my-dockerhub" AND namespace = "alpine"
+~~~
+
+* Find the repos under distroless in gcr
+~~~
+SELECT * FROM repos WHERE registry = "my-gcr" AND namespace = "distroless"
+~~~
+
+## Authentication to dockerql
+
+dockerql is a read-only service that is open for any user with access to the service. There is no native support for authentication to the service. 
+The assumption is that the dockerql is started in a "safe" place, security is handled by your choice of tools before reaching the docekrql service.  
+
+## Getting Started
+Few steps to get dockerql up and running: 
+
+1. Configure access to your registries.  
+1. Select a method to run dockerql as a local server from npmjs, as a standalone (docker container)[], or as (kuberneties pod)[]. 
+1. Try the query api.
+
+## Configure access to your registries
+
+Credentials are configured in JSON format and passed to dockerql via an environment virable or via a config file. If both are setup then the environment variable wins. 
+
+1. Env variable called: "DOCKER_REGISTRIES" contains json document with the configuration. 
+1. if not set then using env variable called: "DOCKER_REGISTRIES_FILE" that points to the location of the configuration file. 
+1. If not set then try a default location for the configuration file at "./.registries.json".
+1. If file not found then used a built in default that setup access to dockerhub with no credentials.
+
+## The JSON format is as follows: 
+~~~
+~~~
+{
+    "default-registry": {{default}},
+    "registries": []
+}
+
+* {{default}} - a default registry to be used if WHERE clause does not include a registry name.
+* The registries area includes the access definition for each registry and it is depended on the registry type.
+
+## Configure access to Docker Hub
 
 The following example access docker hub.
 
@@ -43,12 +86,10 @@ The following example access docker hub.
 }
 ~~~
 
-* Paranmeters:
+* {registryName} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
+* {namespcae} optional parameter. Mapped to dockerhub "organization". 
 
-{registryName} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
-{namespcae} optional parameter. It is sometime called "organization", either the user name, or a name of one of the organizations in dockerhub the user is a memeber of. 
-
-3. Config file for Google Container Registry (GCR)
+## Configure access to Google Container Registry (GCR)
 
 ~~~
 {
@@ -58,27 +99,16 @@ The following example access docker hub.
       "name": {registryName},
       "type": "gcr",
       "namespace": {namespace},
-      "jsonkey": {jsonkey}
+      "username": "_json_key",
+      "password": {jsonkey}
     }
   ]
 }
 ~~~
 
-* Paranmeters:
-
-{registryName} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
-{namespcae} optional parameter. It is sometime called "organization", either the user name, or a name of one of the organizations in dockerhub the user is a memeber of. 
-{jsonkey} is a gcp service account with permissions Project Browser, Storage Object Viewer on the GCS bucket for the container registry (bucket name: artifacts.<your-project>.appspot.com).
-
-4. Running inside Kubernetes (TODO)
-
-1. Define a secret with the registry credentials
-~~~
-kubectl create secret dockerdl-registry "$(cat ~/.registry.json)" 
-~~~
-
-2. Define a kube pod for dockerql
-
+* {registryName} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
+* {namespcae} optional parameter. Mapped to gcr project-id.
+* {jsonkey} is a gcp service account with permissions Project Browser, Storage Object Viewer on the GCS bucket for the container registry (bucket name: artifacts.<your-project>.appspot.com).
 
 ## Technology
 
@@ -88,20 +118,16 @@ Few things we can say about the project:
 2. Built with Node.JS, TypeScript, OpenAPI, and multiple OSS packages that makes development life better.
 3. Packaged as a container image and can ge deployed easily in a kubernetes or other docker envrionments. 
 
-## Authentication to dockerql
-
-dockerql is a read-only service that is open for any user with access to the service. There is no native support for authentication to the service. 
-The assumption is that the dockerql is started in a "safe" place, security is handled by your choice of tools before reaching the docekrql service.  
-
-## Authentication to Registires
-
-dockerql leverage behind the scenes various apis to connect and interact with docker registries. The credentials to authenticate to these docker registries are defined either in an env virable or in a config json file. If both are setup then the env variable wins. 
-
-1. First option: Env variable called: "DOCKER_REGISTRIES" contains json document with the configuration. 
-1. Second option: Env variable called: "DOCKER_REGISTRIES_FILE" points to the location of the configuration file. Default location is assumed "./.registries.json".
-1. If none provided then a default list of registries will be used, providing annonymous access to dockerhub to the docker organization.
-
 ## Parking area
 ~~~
     "build:docs": "./node_modules/redoc-cli/index.js bundle ./openapi.json -o ./openapi.html;./node_modules/redoc-cli/index.js bundle ./schema.json -o ./schema.html",
 ~~~
+
+4. Running inside Kubernetes (TODO)
+
+1. Define a secret with the registry credentials
+~~~
+kubectl create secret dockerdl-registry "$(cat ~/.registry.json)" 
+~~~
+
+2. Define a kube pod for dockerql
