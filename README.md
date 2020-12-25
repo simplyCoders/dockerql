@@ -48,7 +48,17 @@ SELECT * FROM repos WHERE registry = "my-gcr" AND namespace = "distroless"
 dockerql is a read-only service that is open for any user with access to the service. There is no native support for authentication to the service. 
 The assumption is that the dockerql is started in a "safe" place, security is handled by your choice of tools before reaching the docekrql service.  
 
-## Getting Started
+## Getting started
+
+The siplest way to get started with test dockerql is via npm. Follow these steps:
+1. Create a new folder ```mkdir dockerql-test``` and cd to it.
+1. Get package from npmjs ```npm i dockerql```
+1. Run the service locally: ```cd ./node_modules/dockerql/;npm start```
+1. The service is up and running with access to dockerhub using anonymous credentials. 
+1. Open a browser and type ```http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"```
+1. If you see a JSON document with a list of repos then congrats! You have a running instance of dockerql.
+
+## Getting started for real
 Few steps to get dockerql up and running: 
 
 1. Configure access to your registries.  
