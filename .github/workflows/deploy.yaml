@@ -14,11 +14,6 @@ jobs:
         node-version: 15.x
         registry-url: https://registry.npmjs.org/
 
-    # Run the install 
-    - name: Run install
-      run: npm install
-      run: npm run build
-    
     # Publish to npm
     - name: publish
       run: npm publish --access public
