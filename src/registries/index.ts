@@ -109,7 +109,7 @@ const getRegistries = async (where: any): Promise<any[]> => {
     }
     const records: any[] = []
     for (const name of registries.keys()) {
-        records.push({ "name": name, "type": registries.get(name).type, "namespace": registries.get(name).namespace })
+        records.push({ "registry": name, "type": registries.get(name).type, "namespace": registries.get(name).namespace })
     }
     console.log("Get registries successfull. Count:", records.length)
     return records

@@ -19,12 +19,12 @@ SELECT * FROM repos WHERE registry = {registry}
 SELECT * FROM tags WHERE registry = {registry} AND repo = {repo}
 ~~~
 
-# Set up
+## Set up
 
-## Define your .registry.json file
+1. Define your ```.registry.json``` file
 The list of registries is defined in a .registry.json file. 
 
-### Config file for Docker Hub
+2. Config file for Docker Hub
 
 The following example access docker hub.
 
@@ -48,7 +48,7 @@ The following example access docker hub.
 {registryName} is an arbitrary name you choose to represent the registry. The name must be unique in the config file. 
 {namespcae} optional parameter. It is sometime called "organization", either the user name, or a name of one of the organizations in dockerhub the user is a memeber of. 
 
-### Config file for Google Container Registry (GCR)
+3. Config file for Google Container Registry (GCR)
 
 ~~~
 {
@@ -70,7 +70,7 @@ The following example access docker hub.
 {namespcae} optional parameter. It is sometime called "organization", either the user name, or a name of one of the organizations in dockerhub the user is a memeber of. 
 {jsonkey} is a gcp service account with permissions Project Browser, Storage Object Viewer on the GCS bucket for the container registry (bucket name: artifacts.<your-project>.appspot.com).
 
-## Running inside Kubernetes
+4. Running inside Kubernetes (TODO)
 
 1. Define a secret with the registry credentials
 ~~~
@@ -100,3 +100,8 @@ dockerql leverage behind the scenes various apis to connect and interact with do
 1. First option: Env variable called: "DOCKER_REGISTRIES" contains json document with the configuration. 
 1. Second option: Env variable called: "DOCKER_REGISTRIES_FILE" points to the location of the configuration file. Default location is assumed "./.registries.json".
 1. If none provided then a default list of registries will be used, providing annonymous access to dockerhub to the docker organization.
+
+## Parking area
+~~~
+    "build:docs": "./node_modules/redoc-cli/index.js bundle ./openapi.json -o ./openapi.html;./node_modules/redoc-cli/index.js bundle ./schema.json -o ./schema.html",
+~~~
