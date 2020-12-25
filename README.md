@@ -10,7 +10,15 @@ Currently this project is under development and is ready for experimentation usa
 SQL-like query interfaces is still one of the easiest to understand interface to query databases. We are still missing something like that for docker registries. 
 In addition, each docker implementation is a bit different in terms of its authentication, scoping, and features. dockerql provides a unified yet extendable way to access multiple types of registries. 
 
+## Supported registry types
+
+Currently supported: 
+1. Dockerhub
+1. Google Container Registry (GCR)
+
 ## Supported SQL statements
+
+Example SQL supported queries:
 
 ~~~
 SELECT * FROM registries
