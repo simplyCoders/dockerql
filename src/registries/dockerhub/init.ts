@@ -9,7 +9,7 @@ export const init = async (config:any): Promise<any> => {
   const namespace = (typeof (config.namespace) !== 'undefined') ? config.namespace : tempNamespace
 
   if (typeof (config.username) === 'undefined' || config.username === '') {
-    console.info('Annonymous dockerhub access, namespace:', namespace)
+    console.info('Anonymous dockerhub access, namespace:', namespace)
     const context = {
       type, name: config.name, host, namespace, token: '',
     }

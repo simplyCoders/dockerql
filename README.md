@@ -15,7 +15,7 @@ The simplest way to get started with a test dockerql is via npm. Follow these st
 1. Create a new folder and cd to it.
 
 ~~~bash
-mkdir dockerql-test; cd dockerql-test
+mkdir dockerql-test;cd dockerql-test
 ~~~
 
 2. Get the package from npm.
@@ -27,19 +27,20 @@ npm i dockerql
 3. Run the service locally.
 
 ~~~bash
-cd ./node_modules/dockerql/;npm install;npm start
+cd ./node_modules/dockerql/;npm install;npm run build;npm run start:anonymous;cd ../..
 ~~~~
 
 4. The service should be running and you should be able to see the following.
 
-![terminal](https://raw.githubusercontent.com/simplyCoders/dockerql/main/terminal.png)
+<kbd>![terminal](https://raw.githubusercontent.com/simplyCoders/dockerql/main/terminal.png)</kbd>
 
 5. Click on the link below to run your first query in the browser.
-[http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"](http://localhost:8080/v1/query?query=select * from repos where namespace="alpine")
+
+[http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"](http://localhost:8080/v1/query?query=select%20%2A%20from%20repos%20where%20namespace%3D%22alpine%22)
 
 
 6. Congrats! Assuming all went well then you have a running instance of dockerql.
-![browser](https://raw.githubusercontent.com/simplyCoders/dockerql/main/browser.png)
+<kbd>![browser](https://raw.githubusercontent.com/simplyCoders/dockerql/main/browser.png)</kbd>
 
 ## Supported registry types
 
