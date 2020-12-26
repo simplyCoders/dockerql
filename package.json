@@ -1,6 +1,6 @@
 {
   "name": "dockerql",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A read-only SQL-like interface for docker registries.",
   "license": "MIT",
   "authors": ["simplyCoders"],
@@ -19,7 +19,7 @@
     "dockerize": "docker build -t simplycoders/dockerql .",
     "start": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;node .",
     "start:watch": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;nodemon",
-    "start:annonymous": "export NODE_ENV=development;node .",
+    "start:anonymous": "export NODE_ENV=development;node .",
     "tests": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;mocha -r ts-node/register tests/*.spec.ts",
     "tests:coverage": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;nyc mocha -r ts-node/register tests/*.spec.ts"
   },

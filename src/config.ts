@@ -17,7 +17,7 @@ if (typeof (process.env.DOCKER_REGISTRIES) !== 'undefined') {
   if (fs.existsSync(configFile)) {
     tempConf = JSON.parse(fs.readFileSync(configFile).toString())
   } else {
-    console.warn(`Warning. Config file does not exists. Using annonymous access to dockerhub instead. File: ${configFile}`)
+    console.warn(`Warning. Config file does not exists. Using anonymous access to dockerhub instead. File: ${configFile}`)
     tempConf = defaultRegistryConf
   }
 }
@@ -26,7 +26,7 @@ if (typeof (process.env.DOCKER_REGISTRIES) !== 'undefined') {
 if (typeof (tempConf.registries) === 'undefined'
 || tempConf.registries.length === 0
 ) {
-  console.warn('Warning. Registry conf is not right. Using annonymous access to dockerhub instead.')
+  console.warn('Warning. Registry conf is not right. Using anonymous access to dockerhub instead.')
   tempConf = defaultRegistryConf
 }
 
