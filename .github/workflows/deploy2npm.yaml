@@ -1,5 +1,5 @@
 # Workflow to push to npmjs. 
-name: deploy
+name: deploy2npm
 on:
   pull_request:
     types: [ closed ]

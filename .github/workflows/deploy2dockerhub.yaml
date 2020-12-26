@@ -1,4 +1,4 @@
-name: ci
+name: deploy2dockerhub
 on:
   pull_request:
     types: [ closed ]
