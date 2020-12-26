@@ -40,6 +40,7 @@ cd ./node_modules/dockerql/;npm install;npm run build;npm run start:anonymous;cd
 
 
 6. Congrats! Assuming all went well then you have a running instance of dockerql.
+
 <kbd>![browser](https://raw.githubusercontent.com/simplyCoders/dockerql/main/browser.png)</kbd>
 
 ## Supported registry types
