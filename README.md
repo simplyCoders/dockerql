@@ -36,7 +36,7 @@ cd ./node_modules/dockerql/;npm install;npm run build;npm run start:anonymous;cd
 
 5. Click on the link below to run your first query in the browser.
 
-[http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"](http://localhost:8080/v1/query?query=select%20%2A%20from%20repos%20where%20namespace%3D%22alpine%22)
+<kbd>[http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"](http://localhost:8080/v1/query?query=select%20%2A%20from%20repos%20where%20namespace%3D%22alpine%22)</kbd>
 
 
 6. Congrats! Assuming all went well then you have a running instance of dockerql.
