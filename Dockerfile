@@ -3,8 +3,7 @@
 FROM node:15-slim as build
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install && npm install tslint typescript -g
-RUN npm ci --only=production
+RUN npm install && npm install typescript -g
 COPY . .
 RUN npm run build
 
