@@ -1,5 +1,7 @@
 import * as express from 'express'
 import * as sqlparser from 'node-sqlparser'
+import alasql from 'alasql'
+
 import { getTable } from '../registries'
 
 // Perform query
@@ -13,16 +15,25 @@ export const query = async (req: express.Request, res: express.Response) => {
     const ast = sqlparser.parse(sql)
     console.debug('ACT:\n', ast)
 
-    // support only SELECT statements
+    // Support only SELECT statements
     if (ast.type !== 'select') {
       res.status(400)
       res.json({ code: 400, message: `Expected "SELECT" statement but "${ast.type}" found.` })
       return
     }
 
-    // perform the query
+    // Hanldle the query and get result set
     const tableName = ast.from[0].table.toLowerCase()
-    const resultSet = await getTable(tableName, ast.where)
+    const localResultSet = await getTable(tableName, ast.where)
+
+    // Handle the SELECT and rebuild result set
+    ast.from[0].table = '?'
+    const localSql = sqlparser.stringify(ast)
+
+    console.log(localSql)
+    const resultSet = alasql(localSql, [localResultSet])
+
+    // Publish the result set
     res.status(200)
     res.json({
       code: 200,

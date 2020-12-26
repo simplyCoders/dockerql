@@ -29,6 +29,7 @@ SELECT * FROM registries
 SELECT * FROM namespaces WHERE registry = {registry}
 SELECT * FROM repos WHERE registry = {registry} 
 SELECT * FROM images WHERE registry = {registry} AND repo = {repo}
+SELECT count(*) FROM images WHERE registry = {registry} AND repo = {repo}
 ~~~
 
 ## Access to public repos/images
