@@ -1,15 +1,8 @@
-// Load supported registry types
+import { getRegistryType, isARegistryType } from './registry-types'
 import { getRegistries } from './registries'
 import { getNamespaces } from './namespaces'
 import { getRepos } from './repos'
 import { getImages } from './images'
-import * as dockerhub from './dockerhub'
-import * as gcr from './gcr'
-
-// registry data model
-const registryTypes: Map<string, any> = new Map([])
-registryTypes.set(dockerhub.type, dockerhub)
-registryTypes.set(gcr.type, gcr)
 
 const registries: Map<string, any> = new Map([])
 let defaultRegistry = 'dockerhub'
@@ -22,16 +15,16 @@ export const init = async (config: any) => {
 
   await Promise.all(config.registries.map(async (element: any) => {
     const type = element.type.toLowerCase()
-    if (!registryTypes.has(type)) {
+    if (!isARegistryType(type)) {
       const err = `ERROR! Docker registries config file includes unsupported registry type."${element.name}:${element.type}".`
       console.error(err)
       throw (new Error(err))
     }
-    const registry = registryTypes.get(type)
-    const context = await registry.init(element)
+    const context = await getRegistryType(type).init(element)
     registries.set(element.name, context)
   }))
 }
+
 // ----------------------------------------------
 // rounter
 // ----------------------------------------------

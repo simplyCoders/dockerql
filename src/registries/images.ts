@@ -1,11 +1,5 @@
+import { getRegistryType } from './registry-types'
 import { analyzeWhere } from './where-helpers'
-import * as dockerhub from './dockerhub'
-import * as gcr from './gcr'
-
-// registry data model
-const registryTypes: Map<string, any> = new Map([])
-registryTypes.set(dockerhub.type, dockerhub)
-registryTypes.set(gcr.type, gcr)
 
 // ----------------------------------------------
 // getImages
@@ -28,7 +22,6 @@ export const getImages = async (
   const host = (typeof (columns.host) !== 'undefined') ? columns.host : context.host
   const namespace = (typeof (columns.namespace) !== 'undefined') ? columns.namespace : context.namespace
   const { repo } = columns
-  const registry = registryTypes.get(context.type)
 
-  return registry.getImages(context, host, namespace, repo)
+  return getRegistryType(context.type).getImages(context, host, namespace, repo)
 }
