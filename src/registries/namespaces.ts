@@ -1,11 +1,5 @@
+import { getRegistryType } from './registry-types'
 import { analyzeWhere } from './where-helpers'
-import * as dockerhub from './dockerhub'
-import * as gcr from './gcr'
-
-// registry data model
-const registryTypes: Map<string, any> = new Map([])
-registryTypes.set(dockerhub.type, dockerhub)
-registryTypes.set(gcr.type, gcr)
 
 // ----------------------------------------------
 // getNamespaces
@@ -22,8 +16,7 @@ export const getNamespaces = async (
 
   const registryName = (typeof (columns.registry) !== 'undefined') ? columns.registry : defaultRegistry
   const context = registries.get(registryName)
-  const registry = registryTypes.get(context.type)
   const host = (typeof (columns.host) !== 'undefined') ? columns.host : context.host
 
-  return registry.getNamespaces(context, host)
+  return getRegistryType(context.type).getNamespaces(context, host)
 }
