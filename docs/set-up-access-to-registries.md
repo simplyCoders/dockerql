@@ -28,4 +28,4 @@ Currently supported:
 ## Next steps
 
 * Visit the [docekrql docs](./index).
-* Visit the [dockerql](https://github.com/simplyCoders/dockerql) github project and start to experiment.
+* Visit the [dockerql github project page](https://github.com/simplyCoders/dockerql).
