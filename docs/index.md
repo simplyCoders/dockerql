@@ -1,37 +1,58 @@
-## Welcome to GitHub Pages
+> :warning: **The project is under active development**: Be careful how you use it at this time.  
 
-You can use the [editor on GitHub](https://github.com/simplyCoders/dockerql/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+A read-only SQL-like interface for docker registries.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Why
 
-### Markdown
+SQL-like query interfaces is still one of the easiest to understand interface to query databases. We are still missing something like that for docker registries. 
+In addition, each docker implementation is a bit different in terms of its authentication, scoping, and features. dockerql provides a unified yet extendable way to access multiple types of registries. 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Getting started
 
-```markdown
-Syntax highlighted code block
+Getting started is easy and should take seconds. 
 
-# Header 1
-## Header 2
-### Header 3
+Choose your way to get started:
 
-- Bulleted
-- List
+1. Run dockerql as a [docker container](https://github.com/simplyCoders/dockerql/wiki/Getting-started-with-Docker-container).
+2. Run dockerql as a [local service](https://github.com/simplyCoders/dockerql/wiki/Getting-started-with-local-service).
+3. [Configure access to your registries](https://github.com/simplyCoders/dockerql/wiki/Configure-access-to-your-docker-registries).
 
-1. Numbered
-2. List
+## Supported SQL statements
 
-**Bold** and _Italic_ and `Code` text
+Example SQL supported queries:
 
-[Link](url) and ![Image](src)
-```
+~~~sql
+SELECT * FROM registries
+SELECT * FROM namespaces WHERE registry = {registry}
+SELECT * FROM repos WHERE registry = {registry} 
+SELECT * FROM images WHERE registry = {registry} AND repo = {repo}
+~~~
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Access to public repos/images
 
-### Jekyll Themes
+dockerql supports access to public repos for both dockerhub and gcr. We do that by providing namespace value in the WHERE clause. 
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/simplyCoders/dockerql/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Here are simple examples:
 
-### Support or Contact
+* Find the repos under alpine in dockerhub
+~~~sql
+SELECT * FROM repos WHERE registry = "my-dockerhub" AND namespace = "alpine"
+~~~
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+* Find the repos under distroless in gcr
+~~~sql
+SELECT * FROM repos WHERE registry = "my-gcr" AND namespace = "distroless"
+~~~
+
+## Authentication to dockerql
+
+dockerql is a read-only service that is open for any user with access to the service. There is no native support for authentication to the service. 
+The assumption is that the dockerql is started in a "safe" place, security is handled by your choice of tools before reaching the docekrql service.  
+
+## Technology
+
+Few things we can say about the project:
+
+1. Available as open source under the MIT license. 
+2. Built with Node.JS, TypeScript, OpenAPI, and multiple OSS packages that makes development life better.
+3. Packaged in multiple form factors, including a docker image. 
