@@ -35,16 +35,19 @@ dockerql supports access to public repos for both dockerhub and gcr. We do that 
 Here are simple examples:
 
 * Find the repos under alpine in dockerhub
+
 ~~~sql
 SELECT * FROM repos WHERE namespace = "alpine" AND registry = "my-dockerhub"
 ~~~
 
 * Find the images under simplycoders/dockerql in dockerhub
+
 ~~~sql
 SELECT * FROM repos WHERE repo="dockerql" AND namespace="simplycoders" AND registry = "my-dockerhub"
 ~~~
 
 * Find the repos under distroless in gcr
+
 ~~~sql
 SELECT * FROM repos WHERE namespace = "distroless" AND registry = "my-gcr"
 ~~~
