@@ -14,8 +14,8 @@ Getting started is easy and should take seconds.
 Choose your way to get started:
 
 1. Run dockerql as a [docker container](./run-dockerql-as-container).
-2. Run dockerql as a [local service](https://github.com/simplyCoders/dockerql/wiki/Getting-started-with-local-service).
-3. [Configure access to your registries](https://github.com/simplyCoders/dockerql/wiki/Configure-access-to-your-docker-registries).
+2. Run dockerql as a [local service](./run-dockerql-as-local-server).
+3. [Configure access to your registries](./configure-access-to-registries).
 
 ## Supported SQL statements
 
@@ -36,12 +36,17 @@ Here are simple examples:
 
 * Find the repos under alpine in dockerhub
 ~~~sql
-SELECT * FROM repos WHERE registry = "my-dockerhub" AND namespace = "alpine"
+SELECT * FROM repos WHERE namespace = "alpine" AND registry = "my-dockerhub"
+~~~
+
+* Find the images under simplycoders/dockerql in dockerhub
+~~~sql
+SELECT * FROM repos WHERE repo="dockerql" AND namespace="simplycoders" AND registry = "my-dockerhub"
 ~~~
 
 * Find the repos under distroless in gcr
 ~~~sql
-SELECT * FROM repos WHERE registry = "my-gcr" AND namespace = "distroless"
+SELECT * FROM repos WHERE namespace = "distroless" AND registry = "my-gcr"
 ~~~
 
 ## Authentication to dockerql
