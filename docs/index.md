@@ -64,3 +64,8 @@ Few things we can say about the project:
 1. Available as open source under the MIT license. 
 2. Built with Node.JS, TypeScript, OpenAPI, and multiple OSS packages that makes development life better.
 3. Packaged in multiple form factors, including a docker image. 
+
+## Next steps
+
+* Visit the [dockerql](https://github.com/simplyCoders/dockerql) github project and start to experiment.
+
