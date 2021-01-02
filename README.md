@@ -21,4 +21,4 @@ Choose your way to get started:
 
 ## Documentation 
 
-Visit the docekrql documentation [https://simplycoders.github.io/dockerql/](https://simplycoders.github.io/dockerql/)
+Visit the docekrql [docs](https://simplycoders.github.io/dockerql/)
