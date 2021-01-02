@@ -1,6 +1,6 @@
-> :warning: **The project is under active development**: Be careful how you use it at this time.  
-
 A read-only SQL-like interface for docker registries.
+
+**The project is under active development**: Be careful how you use it at this time.
 
 ## Why
 
@@ -13,7 +13,7 @@ Getting started is easy and should take seconds.
 
 Choose your way to get started:
 
-1. Run dockerql as a [docker container](https://github.com/simplyCoders/dockerql/wiki/Getting-started-with-Docker-container).
+1. Run dockerql as a [docker container](./run-dockerql-as-container).
 2. Run dockerql as a [local service](https://github.com/simplyCoders/dockerql/wiki/Getting-started-with-local-service).
 3. [Configure access to your registries](https://github.com/simplyCoders/dockerql/wiki/Configure-access-to-your-docker-registries).
 
