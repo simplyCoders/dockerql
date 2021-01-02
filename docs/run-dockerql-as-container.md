@@ -1,4 +1,4 @@
-# Run dockerql as a docker container 
+# Running dockerql as a docker container
 
 A simple way to get started is using a docker container running dockerql. 
 
@@ -16,19 +16,22 @@ docker pull simplycoders/dockerql
 docker run -p 8080:8080 simplycoders/dockerql
 ~~~
 
-3. The service should be running and you should be able to see the following.
+![terminal](./terminal.png)
 
-<kbd>![terminal](https://raw.githubusercontent.com/simplyCoders/dockerql/main/terminal.png)</kbd>
+3. Test that it works by running your first query from the browser.
 
-4. Test that it works by running your first query from the browser.
+* List of repos under the alpine organization 
+~~~
+http://localhost:8080/v1/query?query=SELECT * FROM repos WHERE namespace="alpine"
+~~~
 
-<kbd>[http://localhost:8080/v1/query?query=select * from repos where namespace="alpine"](http://localhost:8080/v1/query?query=select%20%2A%20from%20repos%20where%20namespace%3D%22alpine%22)</kbd>
+* List of images under the simplycoders/dockerql repo:
+~~~
+http://localhost:8080/v1/query?query=SELECT * FROM images WHERE namespace="simplycoders" AND repo="dockerql"
+~~~
 
-
-5. Congrats! Assuming all went well then you have a running instance of dockerql.
-
-<kbd>![browser](https://raw.githubusercontent.com/simplyCoders/dockerql/main/browser.png)</kbd>
+4. Congrats! Assuming all went well then you have a running instance of dockerql.
 
 ## Next steps
 
-[Configure access to your registries](https://github.com/simplyCoders/dockerql/wiki/Configure-access-to-your-docker-registries)
+* [Configure access to your registries] (./configure-access-to-registries).
