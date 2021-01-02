@@ -24,3 +24,8 @@ Currently supported:
 1. Set up access to [Dockerhub](./set-up-dockerhub)
 1. Set up access to [Amazon Elastic Container Registry](./set-up-ecr) (ECR)
 1. Set up access to [Google Container Registry](./set-up-gcr) (GCR)
+
+## Next steps
+
+* Visit the [docekrql docs](./index).
+* Visit the [dockerql](https://github.com/simplyCoders/dockerql) github project and start to experiment.
