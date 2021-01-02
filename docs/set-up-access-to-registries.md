@@ -27,5 +27,6 @@ Currently supported:
 
 ## Next steps
 
-* Visit the [docekrql docs](./index).
-* Visit the [dockerql github project page](https://github.com/simplyCoders/dockerql).
+* Visit the dockerql [docs](./).
+* Visit the dockerql [project page](https://github.com/simplyCoders/dockerql).
+
