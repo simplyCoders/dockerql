@@ -67,5 +67,5 @@ Few things we can say about the project:
 
 ## Next steps
 
-* Visit the [dockerql github project page](https://github.com/simplyCoders/dockerql).
+* Visit the dockerql [project page](https://github.com/simplyCoders/dockerql).
 
