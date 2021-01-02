@@ -17,7 +17,7 @@ Choose your way to get started:
 
 1. Getting started with [docker container](https://simplycoders.github.io/dockerql/run-dockerql-as-container).
 2. Getting started with [local service](https://simplycoders.github.io/dockerql/run-dockerql-as-local-server).
-3. [Configure access to your registries](https://simplycoders.github.io/dockerql/configure-access-to-registries).
+3. Read how-to [set up access to your registries](https://simplycoders.github.io/dockerql/set-up-access-to-registries).
 
 ## Documentation 
 
