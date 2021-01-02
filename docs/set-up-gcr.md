@@ -1,6 +1,6 @@
 # Set up access to Google Container Registry (GCR)
 
-
+Edit your ```.registry.json``` file and add an entry for an instance of GCR: 
 
 ~~~json
 {
