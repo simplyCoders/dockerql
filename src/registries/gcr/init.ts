@@ -28,8 +28,9 @@ export const init = async (config: any): Promise<any> => {
 
     console.info(`Authenticated successfully to ${config.name} (type: ${type})`)
     console.info('Host:', host)
-    console.info('Namespace:', namespace)
+    console.info('Namespace (project-id):', namespace)
     console.info('User:', config.username)
+    console.info('--------------------------------------------------')
 
     return context
   } catch (err) {

@@ -33,7 +33,7 @@
                     },
                     "namespace": {
                         "type": "string",
-                        "description": "The default namespace to be used for queries against this registry. Namespaces are mapped to organizations in dockerhub and to project-ids in GCR."
+                        "description": "The default namespace to be used for queries against this registry. Namespaces have different use for each registry type. Dockerhub: namespaces are organizations. ECR: namespaces are regions. GCR. namespaces are project-ids."
                     }
                 }
             },

@@ -29,8 +29,6 @@ export const query = async (req: express.Request, res: express.Response) => {
     // Handle the SELECT and rebuild result set
     ast.from[0].table = '?'
     const localSql = sqlparser.stringify(ast)
-
-    console.log(localSql)
     const resultSet = alasql(localSql, [localResultSet])
 
     // Publish the result set

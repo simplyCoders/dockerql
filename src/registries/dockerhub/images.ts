@@ -31,7 +31,6 @@ export const getImages = async (
           digest: manifest.images.length === 0 ? '' : manifest.images[0].digest,
           tag: manifest.name,
           size: manifest.full_size,
-          created: manifest.tag_last_pushed,
           pushed: manifest.tag_last_pushed,
           pulled: manifest.tag_last_pulled,
         })
