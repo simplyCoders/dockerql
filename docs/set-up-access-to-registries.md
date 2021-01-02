@@ -21,6 +21,6 @@ Access to your registries is configured via a JSON document that is passed to do
 ## Supported registry types
 
 Currently supported: 
-1. Set up access to [Dockerhub](./dockerhub)
-1. Set up access to [Amazon Elastic Container Registry](./ecr) (ECR)
-1. Set up access to [Google Container Registry](.gcr) (GCR)
+1. Set up access to [Dockerhub](./set-up-dockerhub)
+1. Set up access to [Amazon Elastic Container Registry](./set-up-ecr) (ECR)
+1. Set up access to [Google Container Registry](./set-up-gcr) (GCR)
