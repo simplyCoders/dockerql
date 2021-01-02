@@ -34,5 +34,5 @@ http://localhost:8080/v1/query?query=SELECT * FROM images WHERE namespace="simpl
 
 ## Next steps
 
-* Read how to [Configure access to your registries](./configure-access-to-registries).
+* Read how-to [set up access to your registries](./set-up-access-to-registries).
 * Visit the [dockerql](https://github.com/simplyCoders/dockerql) github project and start to experiment.
