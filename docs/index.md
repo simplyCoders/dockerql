@@ -15,7 +15,7 @@ Choose your way to get started:
 
 1. Run dockerql as a [docker container](./run-dockerql-as-container).
 2. Run dockerql as a [local service](./run-dockerql-as-local-server).
-3. [Set up access to your registries](./set-up-access-to-registries).
+3. Set up [access to your registries](./set-up-access-to-registries).
 
 ## Supported SQL statements
 
