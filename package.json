@@ -9,7 +9,10 @@
   "keywords": [
     "docker",
     "registry",
-    "SQL"
+    "SQL",
+    "dockerhub",
+    "ECR",
+    "GCR"
   ],
   "bugs": "https://github.com/simplyCoders/dockerql/issues",
   "repository": "github:simplyCoders/dockerql",
