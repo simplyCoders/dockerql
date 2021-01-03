@@ -1,6 +1,6 @@
 # Set up access to Amazon Elastic Container Registry (ECR)
 
-Edit your [```.registry.json```](./set-up=access-toregistries) file and add an entry for an instance of ECR: 
+Edit your [```.registry.json```](./set-up-access-to-registries) file and add an entry for an instance of ECR: 
 
 ~~~json
 {
