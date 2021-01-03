@@ -1,6 +1,6 @@
 # Set up access to Dockerhub
 
-Edit your [```.registry.json```](./set-up=access-toregistries) file and add an entry for an instance of dockerhub: 
+Edit your [```.registry.json```](./set-up-access-to-registries) file and add an entry for an instance of dockerhub: 
 
 ~~~json
 {
