@@ -19,6 +19,14 @@ Choose your way to get started:
 1. Getting started with [local service](https://simplycoders.github.io/dockerql/run-dockerql-as-local-server).
 1. Set up [access to your registries](https://simplycoders.github.io/dockerql/set-up-access-to-registries).
 
+## Supported registry types
+
+Currently supported: 
+
+1. Set up access to [Dockerhub](https://simplycoders.github.io/dockerql/set-up-dockerhub)
+1. Set up access to [Amazon Elastic Container Registry](https://simplycoders.github.io/dockerql/set-up-ecr) (ECR)
+1. Set up access to [Google Container Registry](https://simplycoders.github.io/dockerql/set-up-gcr) (GCR)
+
 ## Documentation 
 
 * docekrql [docs](https://simplycoders.github.io/dockerql/).
