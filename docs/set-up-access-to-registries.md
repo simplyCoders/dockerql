@@ -22,9 +22,9 @@ Access to your registries is configured via a JSON document that is passed to do
 
 Currently supported: 
 
-1. Set up access to [Dockerhub](./set-up-dockerhub)
-1. Set up access to [Amazon Elastic Container Registry](./set-up-ecr) (ECR)
-1. Set up access to [Google Container Registry](./set-up-gcr) (GCR)
+* Set up access to [Dockerhub](./set-up-dockerhub)
+* Set up access to [Amazon Elastic Container Registry](./set-up-ecr) (ECR)
+* Set up access to [Google Container Registry](./set-up-gcr) (GCR)
 
 ## Next steps
 

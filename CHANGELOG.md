@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.10 (Jan-10-2021)
+* Verify support for public repos in dockerhub and gcr. 
+* Update documentation to highlight specific SQL statement to access public repos. 
+
 ## 0.0.7 (Jan-2-2021)
 
 * Happy New Year!
