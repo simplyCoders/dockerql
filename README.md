@@ -2,7 +2,7 @@
 
 A read-only SQL-like interface for docker registries.
 
-> :info: **Early stage project**.  
+> **Early stage project**.  
 
 ## Why
 
