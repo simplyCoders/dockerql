@@ -25,9 +25,9 @@ Edit your [```.registry.json```](./set-up-access-to-registries) file and add an 
 
 For simplicity let's assume that the default registry in the ```.registry.json``` file is gcr. If this is not the case, for all of the examples below the WHERE clause will need to include a condition like  ```AND registry="my-gcr-registry```.  
 
-#### Find repos in my project
+#### Find repos in my project-id
 
-To get the list of repos under one of my projects with project-id = ```my-project-id``` we will use the following.
+To get the list of repos under one of my projects named ```my-project-id``` we will use the following.
 
 ~~~sql
 SELECT * FROM repos WHERE namespace = "my-project-id"
