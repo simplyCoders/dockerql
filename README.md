@@ -2,7 +2,7 @@
 
 A read-only SQL-like interface for docker registries.
 
-> **Early stage project**.  
+> **Early stage project**. Join the effort!
 
 ## Why
 
