@@ -22,12 +22,12 @@ docker run -p 8080:8080 simplycoders/dockerql
 
 * List of repos under the alpine organization 
 ~~~
-http://localhost:8080/v1/query?query=SELECT * FROM repos WHERE namespace="alpine"
+http://localhost:8080/v1/query?sql=SELECT * FROM repos WHERE namespace="alpine"
 ~~~
 
 * List of images under the simplycoders/dockerql repo:
 ~~~
-http://localhost:8080/v1/query?query=SELECT * FROM images WHERE namespace="simplycoders" AND repo="dockerql"
+http://localhost:8080/v1/query?sql=SELECT * FROM images WHERE namespace="simplycoders" AND repo="dockerql"
 ~~~
 
 4. Congrats! Assuming all went well then you have a running instance of dockerql.

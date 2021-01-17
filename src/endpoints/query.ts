@@ -1,5 +1,8 @@
 import * as express from 'express'
+/* eslint-disable */
+// @ts-ignore
 import * as sqlparser from 'node-sqlparser'
+/* eslint-enable */
 import alasql from 'alasql'
 
 import { getTable } from '../registries'
@@ -7,7 +10,13 @@ import { getTable } from '../registries'
 // Perform query
 export const query = async (req: express.Request, res: express.Response) => {
   // Get the query parameter
-  const sql = req.query.query
+  const { sql } = req.query
+  if (typeof (sql) === 'undefined') {
+    res.status(400)
+    res.json({ code: 400, message: 'Expected a "sql" query parameter.' })
+    return
+  }
+
   console.info(`Request:${sql}`)
 
   // Parse query
