@@ -25,8 +25,8 @@
     "start": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;node .",
     "start:watch": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;nodemon",
     "start:anonymous": "export NODE_ENV=development;node .",
-    "tests": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;mocha -r ts-node/register tests/*.spec.ts",
-    "tests:coverage": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;nyc mocha -r ts-node/register tests/*.spec.ts"
+    "test": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=tests/.registries.json;mocha -r ts-node/register tests/*.spec.ts",
+    "test:coverage": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=tests/.registries.json;npx nyc@latest mocha -r ts-node/register tests/*.spec.ts"
   },
   "dependencies": {
     "@types/console-stamp": "^0.2.33",
@@ -44,6 +44,10 @@
     "node-sqlparser": "^1.0.4"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.2.0",
+    "@types/nock": "^11.1.0",
+    "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.11.0",
     "@typescript-eslint/parser": "^4.11.0",
     "chai": "^4.2.0",
@@ -52,7 +56,8 @@
     "eslint-plugin-import": "^2.22.1",
     "mocha": "^8.2.1",
     "nock": "^13.0.5",
-    "supertest": "^6.0.1"
+    "supertest": "^6.0.1",
+    "ts-node": "^9.1.1"
   },
   "nodemonConfig": {
     "ignore": [

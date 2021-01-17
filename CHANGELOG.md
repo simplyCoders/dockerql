@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.0.11 (Jan-16-2021)
+* Update base image to node-15.5.1-slim. 
+* Build a first set of tests
+* Change query parameter to be sql (was previousely query)
+
 ## 0.0.10 (Jan-10-2021)
 * Verify support for public repos in dockerhub and gcr. 
 * Update documentation to highlight specific SQL statement to access public repos. 
