@@ -1,6 +1,6 @@
 {
   "name": "dockerql",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A read-only SQL-like interface for docker registries.",
   "license": "MIT",
   "authors": [
