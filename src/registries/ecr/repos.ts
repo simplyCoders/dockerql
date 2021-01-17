@@ -1,3 +1,5 @@
+import { verbose } from '../../config'
+
 // perform get all repos
 export const getRepos = async (context: any, host: string, namespace: string): Promise<any[]> => {
   const records: any[] = []
@@ -16,7 +18,7 @@ export const getRepos = async (context: any, host: string, namespace: string): P
       })
     })
 
-    console.info('Get repos successfull. Count:', records.length)
+    verbose(`Get repos successfull. Count:${records.length}`)
     return records
   } catch (err) {
     console.error(JSON.stringify(err).substr(0, 800))

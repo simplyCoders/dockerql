@@ -1,3 +1,5 @@
+import { verbose } from '../../config'
+
 // perform get all namespaces
 export const getNamespaces = async (context: any, host: string): Promise<any[]> => {
   const records = [
@@ -7,6 +9,6 @@ export const getNamespaces = async (context: any, host: string): Promise<any[]> 
       namespace: context.namespace,
     },
   ]
-  console.info('Get repos successfull. Count:', records.length)
+  verbose(`Get repos successfull. Count:${records.length}`)
   return records
 }

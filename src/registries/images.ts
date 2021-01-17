@@ -18,6 +18,10 @@ export const getImages = async (
   }
 
   const registryName = (typeof (columns.registry) !== 'undefined') ? columns.registry : defaultRegistry
+  if (typeof (registries.get(registryName)) === 'undefined') {
+    throw new Error(`WHERE clause includes unknown registry name "${registryName}".`)
+  }
+
   const context = registries.get(registryName)
   const host = (typeof (columns.host) !== 'undefined') ? columns.host : context.host
   const namespace = (typeof (columns.namespace) !== 'undefined') ? columns.namespace : context.namespace

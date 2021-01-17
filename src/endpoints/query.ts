@@ -5,6 +5,7 @@ import * as sqlparser from 'node-sqlparser'
 /* eslint-enable */
 import alasql from 'alasql'
 
+import { verbose } from '../config'
 import { getTable } from '../registries'
 
 // Perform query
@@ -22,7 +23,7 @@ export const query = async (req: express.Request, res: express.Response) => {
   // Parse query
   try {
     const ast = sqlparser.parse(sql)
-    console.debug('ACT:\n', ast)
+    verbose(`ACT:\n${JSON.stringify(ast)}`)
 
     // Support only SELECT statements
     if (ast.type !== 'select') {

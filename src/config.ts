@@ -31,9 +31,15 @@ if (typeof (tempConf.registries) === 'undefined'
 }
 
 // ----------------------------------------------
-// exports
+// get environment variables
 // ----------------------------------------------
 export const env = process.env.NODE_ENV || 'production'
+const verboseFlag = typeof (process.env.VERBOSE) !== 'undefined' || false
+export const verbose = (msg: string) => { if (verboseFlag) console.debug(msg) }
+
+// ----------------------------------------------
+// exports
+// ----------------------------------------------
 export const registryConf = tempConf
 export const { registries } = registryConf
 export const defaultRegistry = (typeof (registryConf['default-registry']) !== 'undefined') ? registryConf['default-registry'] : registryConf.registries[0].name

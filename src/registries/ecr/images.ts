@@ -1,3 +1,5 @@
+import { verbose } from '../../config'
+
 // perform get images
 export const getImages = async (
   context: any,
@@ -27,7 +29,7 @@ export const getImages = async (
       })
     })
 
-    console.info('Get images successfull. Count:', records.length)
+    verbose(`Get images successfull. Count:${records.length}`)
     return records
   } catch (err) {
     console.error(JSON.stringify(err).substr(0, 800))

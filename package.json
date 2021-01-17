@@ -26,6 +26,7 @@
     "start:watch": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;nodemon",
     "start:anonymous": "export NODE_ENV=development;node .",
     "test": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=tests/.registries.json;mocha -r ts-node/register tests/*.spec.ts",
+    "test:verbose": "export NODE_ENV=test;export VERBOSE=true;export DOCKER_REGISTRIES_FILE=tests/.registries.json;mocha -r ts-node/register tests/*.spec.ts",
     "test:coverage": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=tests/.registries.json;npx nyc@latest mocha -r ts-node/register tests/*.spec.ts"
   },
   "dependencies": {

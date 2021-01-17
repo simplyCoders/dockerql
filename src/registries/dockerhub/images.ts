@@ -1,14 +1,15 @@
 import axios from 'axios'
+import { verbose } from '../../config'
 
 // perform get images
 export const getImages = async (
   context: any,
-  host:string,
+  host: string,
   namespace: string,
   repo: string,
 ): Promise<any[]> => {
   const endpoint = `https://${host}/v2/repositories/${namespace}/${repo}/tags/`
-  const records:any[] = []
+  const records: any[] = []
 
   try {
     let nextEndpoint = endpoint
@@ -22,7 +23,7 @@ export const getImages = async (
         })
       /* eslint-disable no-await-in-loop */
 
-      resp.data.results.forEach((manifest:any) => {
+      resp.data.results.forEach((manifest: any) => {
         records.push({
           registry: context.name,
           host,
@@ -41,7 +42,7 @@ export const getImages = async (
         console.info('Fetch additional page.')
       }
     }
-    console.info('Get images successfull. Count:', records.length)
+    verbose(`Get images successfull. Count:${records.length}`)
     return records
   } catch (err) {
     console.error(JSON.stringify(err).substr(0, 800))

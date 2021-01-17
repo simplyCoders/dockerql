@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { verbose } from '../../config'
 
 // perform get images
 export const getImages = async (
@@ -42,7 +43,7 @@ export const getImages = async (
         pushed: new Date(parseInt(manifest.timeUploadedMs, 10)).toISOString(),
       })
     })
-    console.info('Get images successfull. Count:', records.length)
+    verbose(`Get images successfull. Count:${records.length}`)
     return records
   } catch (err) {
     console.error(JSON.stringify(err).substr(0, 800))

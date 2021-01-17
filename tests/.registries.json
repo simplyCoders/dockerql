@@ -9,7 +9,7 @@
         {
             "name": "my-dockerhub",
             "type": "dockerhub",
-            "username": "simplycoders",
+            "username": "myuser",
             "password": "abcsimple"
         }
     ]

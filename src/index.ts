@@ -8,7 +8,7 @@ import { query } from './endpoints/query'
 import * as registries from './registries'
 
 // ----------------------------------------------
-// Setup console to include timestamp
+// Setup console
 // ----------------------------------------------
 consoleStamp(console, { pattern: 'dd/mm/yyyy HH:MM:ss.l' })
 
