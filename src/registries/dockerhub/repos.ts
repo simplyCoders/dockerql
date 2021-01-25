@@ -26,6 +26,8 @@ export const getRepos = async (context: any, host: string, namespace: string): P
           description: repo.description,
           isPrivate: repo.is_private,
           updated: repo.last_updated,
+          stars: repo.star_count,
+          pulls: repo.pull_count,
         })
       })
 

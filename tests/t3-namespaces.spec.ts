@@ -18,23 +18,21 @@ const nockDockerHub = (username: string, password: string) => {
     })
     .reply(200, { token: 'thisistheabcsimplefaketoken' })
 
-
   nock('https://hub.docker.com',
     {
       reqheaders: {
-        authorization: 'Bearer thisistheabcsimplefaketoken'
-      }
+        authorization: 'Bearer thisistheabcsimplefaketoken',
+      },
     })
     .get('/v2/repositories/namespaces/')
     .reply(200,
       {
-        "namespaces": [
-          "myuser",
-          "myorg",
-          "myorg2"
-        ]
+        namespaces: [
+          'myuser',
+          'myorg',
+          'myorg2',
+        ],
       })
-
 }
 
 // ----------------------------------------------
@@ -79,5 +77,4 @@ describe('Query the Registries table.', () => {
     chai.expect(res.body.message).to.eql('Query executed successfully.')
     chai.expect(res.body.count).to.eql(3)
   })
-
 })

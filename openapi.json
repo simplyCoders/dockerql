@@ -84,6 +84,34 @@
                     "updated": {
                         "type": "string",
                         "description": "Last time repo was updated (simplified extended ISO 8601). Dockerhub only."
+                    },
+                    "pulls": {
+                        "type": "number",
+                        "description": "Dockerhub's pull_count. Dockerhub only."
+                    },
+                    "stars": {
+                        "type": "number",
+                        "description": "Dockerhub's stars_count. Dockerhub only."
+                    },
+                    "arn": {
+                        "type": "string",
+                        "description": "ECR's repositoryArn. ECR only."
+                    },
+                    "uri": {
+                        "type": "string",
+                        "description": "ECR's repositoryUri. ECR only."
+                    },
+                    "created": {
+                        "type": "number",
+                        "description": "ECR's createdAt. ECR only."
+                    },
+                    "imageImmutability": {
+                        "type": "string",
+                        "description": "ECR's imageTagMutability. ECR only."
+                    },
+                    "scanOnPush": {
+                        "type": "boolean",
+                        "description": "True if ECR's scanOnPush is enabled. ECR only."
                     }
                 }
             },
@@ -117,6 +145,14 @@
                     "size": {
                         "type": "number",
                         "description": "Size in bytes of the image."
+                    },
+                    "architecture": {
+                        "type": "string",
+                        "description": "Architecture, such as amd64. Dockerhub only."
+                    },
+                    "os": {
+                        "type": "string",
+                        "description": "OS type, such as linux. Dockerhub only."
                     },
                     "created": {
                         "type": "string",

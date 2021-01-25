@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 0.0.12 (Jan-24-2021)
+* Change tag field to tags. In ECR and GCR return the array of tags, in Dockerhub, return an array of a single entry. 
+* Add registry specific columns:
+1. Dockerhub: repos added stars and pulls.
+1. Dockerhub: images added architecture and os.
+1. ECR: repos added arn, uri, scanOnPush, imageImmutability, and created.
+
 ## 0.0.11 (Jan-16-2021)
 * Update base image to node-15.5.1-slim. 
 * Build a first set of tests

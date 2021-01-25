@@ -23,7 +23,7 @@ export const getImages = async (
         namespace,
         repo: manifest.repositoryName,
         digest: manifest.imageDigest,
-        tag: manifest.imageTags.length === 0 ? '' : manifest.imageTags[0],
+        tags: manifest.imageTags,
         size: manifest.imageSizeInBytes,
         pushed: manifest.imagePushedAt,
       })
