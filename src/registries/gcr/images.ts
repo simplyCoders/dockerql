@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { verbose } from '../../config'
 
 // perform get images
 export const getImages = async (
@@ -30,19 +31,20 @@ export const getImages = async (
     const records: any[] = []
     Object.keys(resp.data.manifest).forEach((digest) => {
       const manifest = resp.data.manifest[digest]
+      console.log(manifest)
       records.push({
         registry: context.name,
         host,
         namespace,
         repo,
         digest,
-        tag: manifest.tag.length === 0 ? '' : manifest.tag[0],
+        tags: manifest.tag,
         size: manifest.imageSizeBytes,
         created: new Date(parseInt(manifest.timeCreatedMs, 10)).toISOString(),
         pushed: new Date(parseInt(manifest.timeUploadedMs, 10)).toISOString(),
       })
     })
-    console.info('Get images successfull. Count:', records.length)
+    verbose(`Get images successfull. Count:${records.length}`)
     return records
   } catch (err) {
     console.error(JSON.stringify(err).substr(0, 800))

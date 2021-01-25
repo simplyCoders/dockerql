@@ -1,3 +1,5 @@
+import { verbose } from '../config'
+
 // define registry record
 interface RegistryRecord {
     registry: string
@@ -22,6 +24,6 @@ export const getRegistries = async (where: any, registries: Map<string, any>): P
       namespace: element.namespace,
     })
   })
-  console.info('Get registries successfull. Count:', records.length)
+  verbose(`Get registries successfull. Count:${records.length}`)
   return records
 }

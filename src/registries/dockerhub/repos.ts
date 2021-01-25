@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { verbose } from '../../config'
 
 // perform get all repos
 export const getRepos = async (context: any, host: string, namespace: string): Promise<any[]> => {
@@ -25,6 +26,8 @@ export const getRepos = async (context: any, host: string, namespace: string): P
           description: repo.description,
           isPrivate: repo.is_private,
           updated: repo.last_updated,
+          stars: repo.star_count,
+          pulls: repo.pull_count,
         })
       })
 
@@ -33,7 +36,7 @@ export const getRepos = async (context: any, host: string, namespace: string): P
         console.info('Fetch additional page.')
       }
     }
-    console.info('Get repos successfull. Count:', records.length)
+    verbose(`Get repos successfull. Count:${records.length}`)
     return records
   } catch (err) {
     console.error(JSON.stringify(err).substr(0, 800))

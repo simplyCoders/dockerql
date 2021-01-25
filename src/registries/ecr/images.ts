@@ -1,3 +1,5 @@
+import { verbose } from '../../config'
+
 // perform get images
 export const getImages = async (
   context: any,
@@ -21,13 +23,13 @@ export const getImages = async (
         namespace,
         repo: manifest.repositoryName,
         digest: manifest.imageDigest,
-        tag: manifest.imageTags.length === 0 ? '' : manifest.imageTags[0],
+        tags: manifest.imageTags,
         size: manifest.imageSizeInBytes,
         pushed: manifest.imagePushedAt,
       })
     })
 
-    console.info('Get images successfull. Count:', records.length)
+    verbose(`Get images successfull. Count:${records.length}`)
     return records
   } catch (err) {
     console.error(JSON.stringify(err).substr(0, 800))

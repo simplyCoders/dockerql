@@ -1,9 +1,10 @@
+import { verbose } from '../../config'
+
 // perform get all repos
 export const getRepos = async (context: any, host: string, namespace: string): Promise<any[]> => {
   const records: any[] = []
   try {
     const resp = await context.ecr.describeRepositories().promise()
-    console.log(resp)
 
     resp.repositories.forEach((repo: any) => {
       records.push({
@@ -11,12 +12,14 @@ export const getRepos = async (context: any, host: string, namespace: string): P
         host,
         namespace,
         repo: repo.repositoryName,
-        isPrivate: true,
+        arn: repo.repositoryArn,
         created: repo.createdAt,
+        imageImmutability: repo.imageTagMutability,
+        scanOnPush: typeof (repo.imageScanningConfiguration) === 'undefined' ? false : repo.imageScanningConfiguration.scanOnPush,
       })
     })
 
-    console.info('Get repos successfull. Count:', records.length)
+    verbose(`Get repos successfull. Count:${records.length}`)
     return records
   } catch (err) {
     console.error(JSON.stringify(err).substr(0, 800))
