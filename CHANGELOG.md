@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.0.13 (Feb-4-2021)
+* Package dockerql as a library and move the server file to a sub folder. 
+
 ## 0.0.12 (Jan-24-2021)
 * Change tag field to tags. In ECR and GCR return the array of tags, in Dockerhub, return an array of a single entry. 
 * Add registry specific columns:

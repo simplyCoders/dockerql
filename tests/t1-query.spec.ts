@@ -3,7 +3,7 @@ import { describe, it } from 'mocha'
 import request from 'supertest'
 import nock from 'nock'
 
-import { server } from '../src/index'
+import { server } from '../src/server/index'
 
 const app = server()
 
