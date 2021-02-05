@@ -15,4 +15,4 @@ COPY --from=build /usr/src/app/dist ./dist
 COPY package*.json ./
 RUN npm install --only=production
 EXPOSE 8080
-CMD [ "node", "./dist/index.js" ]
+CMD [ "node", "./dist/server/index.js" ]

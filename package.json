@@ -1,6 +1,6 @@
 {
   "name": "dockerql",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "A read-only SQL-like interface for docker registries.",
   "license": "MIT",
   "authors": [
@@ -16,7 +16,7 @@
   ],
   "bugs": "https://github.com/simplyCoders/dockerql/issues",
   "repository": "github:simplyCoders/dockerql",
-  "main": "dist/index.js",
+  "main": "dist/server/index.js",
   "scripts": {
     "prebuild": "eslint . --ext .ts --fix",
     "prestart": "npm run build",
