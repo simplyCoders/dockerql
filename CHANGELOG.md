@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.0 (March-15-2021)
+* A complete refactor of the package organization. Creating a new lib and server separate projects. 
+
 ## 0.0.13 (Feb-4-2021)
 * Package dockerql as a library and move the server file to a sub folder. 
 

@@ -2,7 +2,7 @@
 
 A read-only SQL-like interface for docker registries.
 
-> **Early stage project**. Join the effort!
+> **Early stage project**
 
 ## Why
 
@@ -30,3 +30,14 @@ Currently supported:
 ## Documentation 
 
 * docekrql [docs](https://simplycoders.github.io/dockerql/).
+
+## Folder structure
+
+dockerQL
+|
+└─ examples
+|  └─ simple
+| 
+└─ lib # packaging of dockerQL as an npm package
+| 
+└─ server # api server servicing dockerQL via REST api  

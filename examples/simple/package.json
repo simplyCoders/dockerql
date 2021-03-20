@@ -1,0 +1,27 @@
+{
+  "name": "simple",
+  "version": "1.0.0",
+  "description": "A read-only SQL-like interface for docker registries.",
+  "license": "MIT",
+  "authors": [
+    "simplyCoders"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "prebuild": "eslint . --ext .ts --fix",
+    "prestart": "npm run build",
+    "build": "tsc -p tsconfig.json",
+    "start": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "eslint": "^7.22.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "dockerql": "file:../../lib/dockerql-0.1.0.tgz"
+  }
+}

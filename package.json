@@ -1,76 +1,24 @@
 {
-  "name": "dockerql",
-  "version": "0.0.13",
-  "description": "A read-only SQL-like interface for docker registries.",
-  "license": "MIT",
-  "authors": [
-    "simplyCoders"
-  ],
-  "keywords": [
-    "docker",
-    "registry",
-    "SQL",
-    "dockerhub",
-    "ECR",
-    "GCR"
-  ],
-  "bugs": "https://github.com/simplyCoders/dockerql/issues",
-  "repository": "github:simplyCoders/dockerql",
-  "main": "dist/server/index.js",
-  "scripts": {
-    "prebuild": "eslint . --ext .ts --fix",
-    "prestart": "npm run build",
-    "build": "tsc -p tsconfig.json",
-    "dockerize": "docker build -t simplycoders/dockerql .",
-    "start": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;node .",
-    "start:watch": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;nodemon",
-    "start:anonymous": "export NODE_ENV=development;node .",
-    "test": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=tests/.registries.json;mocha -r ts-node/register tests/*.spec.ts",
-    "test:verbose": "export NODE_ENV=test;export VERBOSE=true;export DOCKER_REGISTRIES_FILE=tests/.registries.json;mocha -r ts-node/register tests/*.spec.ts",
-    "test:coverage": "export NODE_ENV=test;export DOCKER_REGISTRIES_FILE=tests/.registries.json;npx nyc@latest mocha -r ts-node/register tests/*.spec.ts"
-  },
-  "dependencies": {
-    "@types/console-stamp": "^0.2.33",
-    "@types/cors": "^2.8.9",
-    "@types/express": "^4.17.9",
-    "@types/figlet": "^1.2.1",
-    "alasql": "^0.6.5",
-    "aws-sdk": "^2.817.0",
-    "axios": "^0.21.1",
-    "console-stamp": "^0.2.9",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "figlet": "^1.5.0",
-    "fs": "^0.0.1-security",
-    "node-sqlparser": "^1.0.4"
-  },
-  "devDependencies": {
-    "@types/chai": "^4.2.14",
-    "@types/mocha": "^8.2.0",
-    "@types/nock": "^11.1.0",
-    "@types/supertest": "^2.0.10",
-    "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.11.0",
-    "chai": "^4.2.0",
-    "eslint": "^7.16.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
-    "mocha": "^8.2.1",
-    "nock": "^13.0.5",
-    "supertest": "^6.0.1",
-    "ts-node": "^9.1.1"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "**/*.test.ts",
-      "**/*.spec.ts",
-      ".git",
-      "node_modules"
+    "name": "dockerql",
+    "version": "0.1.0",
+    "description": "A read-only SQL-like interface for docker registries.",
+    "license": "MIT",
+    "authors": [
+        "simplyCoders"
     ],
-    "watch": [
-      "src"
+    "keywords": [
+        "docker",
+        "registry",
+        "SQL",
+        "dockerhub",
+        "ECR",
+        "GCR"
     ],
-    "exec": "npm start",
-    "ext": "ts"
-  }
+    "bugs": "https://github.com/simplyCoders/dockerql/issues",
+    "repository": "github:simplyCoders/dockerql",
+    "scripts": {
+        "msgs": "clear&&tput setaf 1&&echo '----------------------------'&&echo 'Run npm from the sub-folders'&&echo '----------------------------'",
+        "build": "npm run msgs",
+        "start": "npm run msgs"
+    }
 }

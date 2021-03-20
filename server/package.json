@@ -1,0 +1,23 @@
+{
+  "name": "dockerql-server",
+  "version": "0.0.14",
+  "description": "A read-only SQL-like interface for docker registries.",
+  "main": "/dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "authors": [
+    "simplyCoders"
+  ],
+  "keywords": [
+    "docker",
+    "registry",
+    "SQL",
+    "dockerhub",
+    "ECR",
+    "GCR"
+  ],
+  "bugs": "https://github.com/simplyCoders/dockerql/issues",
+  "repository": "github:simplyCoders/dockerql",
+}
