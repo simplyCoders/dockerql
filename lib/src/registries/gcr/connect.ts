@@ -15,27 +15,23 @@ export const connect = async (registry: iRegistry): Promise<iSession> => {
     password: JSON.stringify(registry.password),
   }
 
-  try {
-    const endpoint = `https://${host}/v2/token?scope=repository:${namespace}/catalog:*&service=${host}`
-    const resp = await axios.get(endpoint, { auth: data })
-    const { token } = resp.data
+  const endpoint = `https://${host}/v2/token?scope=repository:${namespace}/catalog:*&service=${host}`
+  const resp = await axios.get(endpoint, { auth: data })
+  const { token } = resp.data
 
-    logger.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
-    logger.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
-    logger.info('--------------------------------------------------')
+  logger.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
+  logger.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
+  logger.info('--------------------------------------------------')
 
-    return {
-      registry: registry.name,
-      type: registry.type,
-      namespace,
-      host,
-      token,
-      custom: {
-        username: registry.username,
-        password: registry.password,
-      }
+  return {
+    registry: registry.name,
+    type: registry.type,
+    namespace,
+    host,
+    token,
+    custom: {
+      username: registry.username,
+      password: registry.password,
     }
-  } catch (err) {
-    throw new Error(JSON.stringify(err).substr(0, 800))
   }
 }

@@ -6,9 +6,6 @@ const main = async () => {
     dockerql.setup()
 
     try {
-        // TODO: 
-        // lib should throw error
-        // lib should retunr simpler response without code, msg, and count
 
         // connect to a registry, in this case dockerhub with anonymous access
         await dockerql.connect({ name: "dockerhub", type: "dockerhub" })
@@ -18,11 +15,11 @@ const main = async () => {
 
         // humanify the numbers
         const tbl = []
-        for (let i = 0; i < rsp.data.length; i += 1) {
+        for (let i = 0; i < rsp.length; i += 1) {
             tbl.push({
-                repo: rsp.data[i].repo,
-                stars: Numbers.Humanify(rsp.data[i].stars),
-                pulls: Numbers.Humanify(rsp.data[i].pulls)
+                repo: rsp[i].repo,
+                stars: Numbers.Humanify(rsp[i].stars),
+                pulls: Numbers.Humanify(rsp[i].pulls)
             })
         }
         // print the number of repos and the first entry

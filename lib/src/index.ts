@@ -4,13 +4,6 @@ import * as logger from './helpers/logger'
 // ----------------------------------------------
 // interfaces
 // ----------------------------------------------
-export interface Response { // response is a generic returned result or error
-    code: number
-    msg: string,
-    count?: number,
-    data?: any
-}
-
 export interface Registry { // registry is a definition of connection details with a registry
     name: string,
     type: string,
@@ -41,13 +34,13 @@ export const setup = (options?: Options) => {
 // Connect to a registry. 
 // User may call this function multiple times to connect to mutiple registries
 // ----------------------------------------------
-export const connect = async (registry: Registry, isDefault?: boolean): Promise<Response> => {
-    return await registries.connect(registry, sessions, isDefault)
+export const connect = async (registry: Registry, isDefault?: boolean) => {
+    await registries.connect(registry, sessions, isDefault)
 }
 
 // ----------------------------------------------
 // the query method
 // ----------------------------------------------
-export const query = async (sql: string): Promise<Response> => {
+export const query = async (sql: string): Promise<any[]> => {
     return await registries.query(sql, sessions)
 }

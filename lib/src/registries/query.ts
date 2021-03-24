@@ -31,7 +31,7 @@ const getTable = async (tableName: string, where: any, sessions: iActiveSessions
 // ----------------------------------------------
 // Parse the SQL statement and perform the needed getTable
 // ----------------------------------------------
-export const query = async (sql: string, sessions: iActiveSessions): Promise<any> => {
+export const query = async (sql: string, sessions: iActiveSessions): Promise<any[]> => {
 
   try {
     logger.info(`Request:${sql}`)
@@ -56,15 +56,11 @@ export const query = async (sql: string, sessions: iActiveSessions): Promise<any
 
     // Publish the result set
     logger.info(`{ code:200, message: "Ok.", count: resultSet.length`)
-    return ({
-      code: 200,
-      msg: 'Ok.',
-      count: resultSet.length,
-      data: resultSet,
-    })
+    return resultSet
+
   } catch (err) {
     const msg = (err instanceof Error) ? (err as Error).message : err
     logger.error(msg)
-    return { code: 400, msg: msg }
+    throw new Error(msg)
   }
 }

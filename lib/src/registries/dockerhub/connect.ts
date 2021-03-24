@@ -40,22 +40,18 @@ export const connect = async (registry: iRegistry): Promise<iSession> => {
     password: registry.password,
   }
 
-  try {
-    const resp = await axios.post(`https://${host}/v2/users/login/`, data)
-    const { token } = resp.data
+  const resp = await axios.post(`https://${host}/v2/users/login/`, data)
+  const { token } = resp.data
 
-    logger.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
-    logger.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
-    logger.info('--------------------------------------------------')
+  logger.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
+  logger.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
+  logger.info('--------------------------------------------------')
 
-    return {
-      registry: registry.name,
-      type: registry.type,
-      namespace,
-      host,
-      token
-    }
-  } catch (err) {
-    throw new Error (JSON.stringify(err).substr(0, 800) )
+  return {
+    registry: registry.name,
+    type: registry.type,
+    namespace,
+    host,
+    token
   }
 }

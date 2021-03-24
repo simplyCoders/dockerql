@@ -15,41 +15,37 @@ export const getImages = async (
   const endpoint = `https://${host}/v2/repositories/${namespace}/${repo}/tags/`
   const records: any[] = []
 
-  try {
-    let nextEndpoint = endpoint
-    while (nextEndpoint !== null) {
-      /* eslint-disable no-await-in-loop */
-      const resp = await axios.get(nextEndpoint,
-        {
-          headers: {
-            authorization: `Bearer ${session.token}`,
-          },
-        })
-      /* eslint-disable no-await-in-loop */
-
-      resp.data.results.forEach((manifest: any) => {
-        records.push({
-          registry: session.registry,
-          host,
-          namespace,
-          repo,
-          digest: manifest.images.length === 0 ? '' : manifest.images[0].digest,
-          architecture: manifest.images.length === 0 ? '' : manifest.images[0].architecture,
-          os: manifest.images.length === 0 ? '' : manifest.images[0].os,
-          tags: [manifest.name],
-          size: manifest.full_size,
-          pushed: manifest.tag_last_pushed,
-          pulled: manifest.tag_last_pulled,
-        })
+  let nextEndpoint = endpoint
+  while (nextEndpoint !== null) {
+    /* eslint-disable no-await-in-loop */
+    const resp = await axios.get(nextEndpoint,
+      {
+        headers: {
+          authorization: `Bearer ${session.token}`,
+        },
       })
+    /* eslint-disable no-await-in-loop */
 
-      nextEndpoint = resp.data.next
-      if (nextEndpoint !== null) {
-        logger.info('Fetch additional page.')
-      }
+    resp.data.results.forEach((manifest: any) => {
+      records.push({
+        registry: session.registry,
+        host,
+        namespace,
+        repo,
+        digest: manifest.images.length === 0 ? '' : manifest.images[0].digest,
+        architecture: manifest.images.length === 0 ? '' : manifest.images[0].architecture,
+        os: manifest.images.length === 0 ? '' : manifest.images[0].os,
+        tags: [manifest.name],
+        size: manifest.full_size,
+        pushed: manifest.tag_last_pushed,
+        pulled: manifest.tag_last_pulled,
+      })
+    })
+
+    nextEndpoint = resp.data.next
+    if (nextEndpoint !== null) {
+      logger.info('Fetch additional page.')
     }
-    return records
-  } catch (err) {
-    throw new Error(JSON.stringify(err).substr(0, 800))
   }
+  return records
 }

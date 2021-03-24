@@ -14,29 +14,25 @@ export const getRepos = async (session: iSession, host: string, namespace: strin
   }
   const endpoint = `https://${host}/v2/_catalog`
 
-  try {
-    // generate new token for scope
-    const respGetToken = await axios.get(endpointGetToken, { auth: data })
-    const tempToken = respGetToken.data.token
-    // get the data
-    const resp = await axios.get(endpoint,
-      {
-        headers: {
-          authorization: `Bearer ${tempToken}`,
-        },
-      })
-    const records: any[] = []
-    resp.data.repositories.forEach((name: string) => {
-      records.push({
-        registry: session.registry,
-        host,
-        namespace,
-        repo: name,
-      })
+  // generate new token for scope
+  const respGetToken = await axios.get(endpointGetToken, { auth: data })
+  const tempToken = respGetToken.data.token
+  // get the data
+  const resp = await axios.get(endpoint,
+    {
+      headers: {
+        authorization: `Bearer ${tempToken}`,
+      },
     })
+  const records: any[] = []
+  resp.data.repositories.forEach((name: string) => {
+    records.push({
+      registry: session.registry,
+      host,
+      namespace,
+      repo: name,
+    })
+  })
 
-    return records
-  } catch (err) {
-    throw new Error(JSON.stringify(err).substr(0, 800))
-  }
+  return records
 }

@@ -20,34 +20,30 @@ export const getImages = async (
 
   const endpoint = `https://${host}/v2/${namespace}/${repo}/tags/list`
 
-  try {
-    // generate new token for scope
-    const respGetToken = await axios.get(endpointGetToken, { auth: data })
-    const tempToken = respGetToken.data.token
-    // get the data
-    const resp = await axios.get(endpoint,
-      {
-        headers: {
-          authorization: `Bearer ${tempToken}`,
-        },
-      })
-    const records: any[] = []
-    Object.keys(resp.data.manifest).forEach((digest) => {
-      const manifest = resp.data.manifest[digest]
-      records.push({
-        registry: session.registry,
-        host,
-        namespace,
-        repo,
-        digest,
-        tags: manifest.tag,
-        size: manifest.imageSizeBytes,
-        created: new Date(parseInt(manifest.timeCreatedMs, 10)).toISOString(),
-        pushed: new Date(parseInt(manifest.timeUploadedMs, 10)).toISOString(),
-      })
+  // generate new token for scope
+  const respGetToken = await axios.get(endpointGetToken, { auth: data })
+  const tempToken = respGetToken.data.token
+  // get the data
+  const resp = await axios.get(endpoint,
+    {
+      headers: {
+        authorization: `Bearer ${tempToken}`,
+      },
     })
-    return records
-  } catch (err) {
-    throw new Error(JSON.stringify(err).substr(0, 800))
-  }
+  const records: any[] = []
+  Object.keys(resp.data.manifest).forEach((digest) => {
+    const manifest = resp.data.manifest[digest]
+    records.push({
+      registry: session.registry,
+      host,
+      namespace,
+      repo,
+      digest,
+      tags: manifest.tag,
+      size: manifest.imageSizeBytes,
+      created: new Date(parseInt(manifest.timeCreatedMs, 10)).toISOString(),
+      pushed: new Date(parseInt(manifest.timeUploadedMs, 10)).toISOString(),
+    })
+  })
+  return records
 }

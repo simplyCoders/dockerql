@@ -11,24 +11,20 @@ export const getNamespaces = async (session: iSession, host: string): Promise<an
   }
 
   const endpoint = `https://${host}/v2/repositories/namespaces/`
-  try {
-    const resp = await axios.get(endpoint,
-      {
-        headers: {
-          authorization: `Bearer ${session.token}`,
-        },
-      })
-    const records:any[] = []
-    resp.data.namespaces.forEach((namespace: string) => {
-      records.push({
-        registry: session.registry,
-        host,
-        namespace,
-      })
+  const resp = await axios.get(endpoint,
+    {
+      headers: {
+        authorization: `Bearer ${session.token}`,
+      },
     })
+  const records: any[] = []
+  resp.data.namespaces.forEach((namespace: string) => {
+    records.push({
+      registry: session.registry,
+      host,
+      namespace,
+    })
+  })
 
-    return records
-  } catch (err) {
-    throw new Error(JSON.stringify(err).substr(0, 800))
-  }
+  return records
 }

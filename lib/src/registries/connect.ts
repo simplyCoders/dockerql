@@ -27,10 +27,9 @@ export const connect = async (registry: iRegistry, sessions: iActiveSessions, is
             sessions.default = registry.name
         }
 
-        return { code: 200, msg: 'Ok.' }
     } catch (err) {
         const msg = (err instanceof Error) ? (err as Error).message : err
         logger.error(msg)
-        return { code: 401, msg: msg }
+        throw new Error (msg)
     }
 }
