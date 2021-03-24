@@ -2,26 +2,20 @@
   "name": "simple",
   "version": "1.0.0",
   "description": "A read-only SQL-like interface for docker registries.",
-  "license": "MIT",
-  "authors": [
-    "simplyCoders"
-  ],
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "prebuild": "eslint . --ext .ts --fix",
-    "prestart": "npm run build",
-    "build": "tsc -p tsconfig.json",
-    "start": "export NODE_ENV=development;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build",
+    "start": "npx ts-node src/index.ts",
+    "build:clean": "rm -rf node_modules;rm -rf dist;rm package-lock.json;clear;npm install&&ls ../../lib/*.tgz|xargs -I{} npm install {} -s&&npm run build"
   },
+  "author": "simplyCoders",
+  "license": "MIT",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "eslint": "^7.22.0",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.3"
+    "typescript": "^4.1.5"
   },
   "dependencies": {
-    "dockerql": "file:../../lib/dockerql-0.1.0.tgz"
+    "dockerql": "file:../../lib/dockerql-0.1.0.tgz",
+    "humanify-numbers": "^1.0.1"
   }
 }

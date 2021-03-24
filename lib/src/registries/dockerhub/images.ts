@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { iSession } from '../types'
+import * as logger from '../../helpers/logger'
 
 // ----------------------------------------------
 // perform get images
@@ -44,7 +45,7 @@ export const getImages = async (
 
       nextEndpoint = resp.data.next
       if (nextEndpoint !== null) {
-        console.info('Fetch additional page.')
+        logger.info('Fetch additional page.')
       }
     }
     return records

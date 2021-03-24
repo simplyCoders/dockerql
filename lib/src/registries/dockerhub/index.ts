@@ -6,7 +6,7 @@ import { iRegistryType } from '../types'
 
 
 export const Dockerhub = {
-  type:'dockerhub',
+  type: 'dockerhub',
   connect,
   getNamespaces,
   getRepos,

@@ -1,6 +1,7 @@
 import * as aws from 'aws-sdk'
 
 import { iRegistry, iSession } from '../types'
+import * as logger from '../../helpers/logger'
 
 // ----------------------------------------------
 // connect
@@ -29,9 +30,9 @@ export const connect = async (registry: iRegistry): Promise<iSession> => {
   const token = authTokenResponse.authorizationData[0].authorizationToken
   const expiresAt = authTokenResponse.authorizationData[0].expiresAt
 
-  console.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
-  console.info(`Host: ${host}, Namespace (Region): ${namespace}, User: ${registry.username}`)
-  console.info('--------------------------------------------------')
+  logger.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
+  logger.info(`Host: ${host}, Namespace (Region): ${namespace}, User: ${registry.username}`)
+  logger.info('--------------------------------------------------')
 
   return {
     registry: registry.name,

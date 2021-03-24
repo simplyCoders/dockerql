@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { iRegistry, iSession } from '../types'
+import * as logger from '../../helpers/logger'
 
 // ----------------------------------------------
 // connect
@@ -22,9 +23,9 @@ export const connect = async (registry: iRegistry): Promise<iSession> => {
 
   // dockerhub's anonymous access: token is empty
   if (typeof (registry.username) === 'undefined' || registry.username === '') {
-    console.info(`Anonymous access to ${registry.name} (type: ${registry.type})`)
-    console.info(`Host: ${host}, Namespace (organization): ${namespace}`)
-    console.info('--------------------------------------------------')
+    logger.info(`Anonymous access to ${registry.name} (type: ${registry.type})`)
+    logger.info(`Host: ${host}, Namespace (organization): ${namespace}`)
+    logger.info('--------------------------------------------------')
     return {
       registry: registry.name,
       type: registry.type,
@@ -43,9 +44,9 @@ export const connect = async (registry: iRegistry): Promise<iSession> => {
     const resp = await axios.post(`https://${host}/v2/users/login/`, data)
     const { token } = resp.data
 
-    console.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
-    console.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
-    console.info('--------------------------------------------------')
+    logger.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
+    logger.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
+    logger.info('--------------------------------------------------')
 
     return {
       registry: registry.name,

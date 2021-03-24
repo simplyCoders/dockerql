@@ -1,20 +1,17 @@
 {
     "compilerOptions": {
-        "module": "esnext",
-        "esModuleInterop": true,
         "target": "ES2020",
-        "noImplicitAny": true,
+        "module": "CommonJS",
         "moduleResolution": "node",
-        "sourceMap": true,
-        "outDir": "dist",
-        "baseUrl": ".",
-        "paths": {
-            "*": [
-                "node_modules/*"
-            ]
-        }
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "declaration": false,
+        "outDir": "dist"
     },
-    "include": [
-        "src/**/*"
-    ]
+    "include": ["src"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
 }

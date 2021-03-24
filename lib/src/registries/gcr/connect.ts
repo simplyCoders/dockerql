@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { iRegistry, iSession } from '../types'
+import * as logger from '../../helpers/logger'
 
 // ----------------------------------------------
 // connect
@@ -19,9 +20,9 @@ export const connect = async (registry: iRegistry): Promise<iSession> => {
     const resp = await axios.get(endpoint, { auth: data })
     const { token } = resp.data
 
-    console.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
-    console.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
-    console.info('--------------------------------------------------')
+    logger.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
+    logger.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
+    logger.info('--------------------------------------------------')
 
     return {
       registry: registry.name,
