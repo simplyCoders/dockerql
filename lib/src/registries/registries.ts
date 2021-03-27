@@ -13,7 +13,7 @@ interface RegistryRecord {
 // ----------------------------------------------
 export const getRegistries = async (where: any, sessions: iActiveSessions): Promise<any[]> => {
   if (where !== null) {
-    throw new Error('Query the "Registries" table does not support the WHERE clause.')
+    throw new Error(`Query the 'Registries' table does not support the WHERE clause.`)
   }
   const records: RegistryRecord[] = []
   sessions.entries.forEach((session) => {

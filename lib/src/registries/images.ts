@@ -8,7 +8,7 @@ export const getImages = async (
   where: any,
   sessions: iActiveSessions,
 ): Promise<any[]> => {
-  const throwMessage = new Error('WHERE for "Images" must filter by "Repo", and may filter by "Registry", "Host" and "Namespace".')
+  const throwMessage = new Error(`WHERE for 'Images' must filter by 'Repo', and may filter by 'Registry', 'Host' and 'Namespace'.`)
   const supportedColumns = ['registry', 'host', 'namespace', 'repo']
 
   const columns = analyzeWhere(where, supportedColumns, throwMessage)
@@ -17,11 +17,11 @@ export const getImages = async (
   }
 
   const registryName = (typeof (columns.registry) !== 'undefined') ? columns.registry : sessions.default
-  if (typeof (sessions.entries.get(registryName)) === 'undefined') {
-    throw new Error(`WHERE clause includes unknown registry name "${registryName}".`)
+  if (typeof sessions.entries[registryName] === 'undefined') {
+    throw new Error(`WHERE clause includes unknown registry name '${registryName}'.`)
   }
 
-  const session = sessions.entries.get(registryName)
+  const session = sessions.entries[registryName]
   const host = (typeof (columns.host) !== 'undefined') ? columns.host : session.host
   const namespace = (typeof (columns.namespace) !== 'undefined') ? columns.namespace : session.namespace
   const { repo } = columns

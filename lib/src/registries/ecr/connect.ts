@@ -23,7 +23,7 @@ export const connect = async (registry: iRegistry): Promise<iSession> => {
   const authTokenResponse = await ecr.getAuthorizationToken().promise()
   if (!Array.isArray(authTokenResponse.authorizationData)
     || !authTokenResponse.authorizationData.length) {
-    throw new Error(`ECR ${registry.name} error getting an authorization token from AWS.`)
+    throw new Error(`ECR '${registry.name}' error getting an authorization token from AWS.`)
   }
 
   const host = authTokenResponse.authorizationData[0].proxyEndpoint

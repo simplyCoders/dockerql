@@ -1,5 +1,5 @@
-import { Numbers } from 'humanify-numbers'
 import * as dockerql from 'dockerql'
+import { Numbers } from 'humanify-numbers'
 
 const main = async () => {
     // setup the dockerql option, for now this means loglevel
@@ -18,8 +18,8 @@ const main = async () => {
         for (let i = 0; i < rsp.length; i += 1) {
             tbl.push({
                 repo: rsp[i].repo,
-                stars: Numbers.Humanify(rsp[i].stars),
-                pulls: Numbers.Humanify(rsp[i].pulls)
+                stars: Numbers.stringify(rsp[i].stars),
+                pulls: Numbers.stringify(rsp[i].pulls)
             })
         }
         // print the number of repos and the first entry

@@ -2,6 +2,9 @@
 
 ## 0.1.0 (March-15-2021)
 * A complete refactor of the package organization. Creating a new lib and server separate projects. 
+* Change default conf file to `~/.dockerql.json`
+* Change optional env variable from "DOCKER_REGISTRIES" to "DOCKERQL_CONF".
+* Change optional env variable from "DOCKER_REGISTRIES_FILE" to "DOCKERQL_FILE".
 
 ## 0.0.13 (Feb-4-2021)
 * Package dockerql as a library and move the server file to a sub folder. 

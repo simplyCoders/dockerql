@@ -13,11 +13,11 @@ export const connect = async (registry: iRegistry, sessions: iActiveSessions, is
         }
 
         if (typeof (sessions[registry.name]) !== 'undefined') {
-            throw new Error(`ERROR! A registry with name "${registry.name}" already exists.`)
+            throw new Error(`ERROR! A registry with name '${registry.name}' already exists.`)
         }
 
         if (!isARegistryType(registry.type)) {
-            throw new Error(`ERROR! "${registry.type}" is an unsupported registry type.`)
+            throw new Error(`ERROR! '${registry.type}' is an unsupported registry type.`)
         }
 
         const session = await getRegistryType(registry.type).connect(registry)

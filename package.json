@@ -19,6 +19,8 @@
     "scripts": {
         "msgs": "clear&&tput setaf 1&&echo '----------------------------'&&echo 'Run npm from the sub-folders'&&echo '----------------------------'",
         "build": "npm run msgs",
-        "start": "npm run msgs"
+        "test": "npm run msgs",
+        "start": "npm run msgs",
+        "dockerize": "docker build -t simplycoders/dockerql ."
     }
 }
