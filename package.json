@@ -34,7 +34,7 @@
     "@types/cors": "^2.8.9",
     "@types/express": "^4.17.9",
     "@types/figlet": "^1.2.1",
-    "alasql": "^0.6.5",
+    "alasql": "^0.7.0",
     "aws-sdk": "^2.817.0",
     "axios": "^0.21.1",
     "console-stamp": "^0.2.9",
