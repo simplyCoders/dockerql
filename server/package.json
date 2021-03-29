@@ -1,6 +1,6 @@
 {
   "name": "dockerql-server",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A read-only SQL-like interface for docker registries.",
   "main": "/dist/index.js",
   "scripts": {

@@ -16,6 +16,6 @@ jobs:
 
     # Publish to npm
     - name: publish
-      run: cd ./lib&&npm publish --access public
+      run: cp README.md ./lib&&cd ./lib&&npm publish --access public
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
