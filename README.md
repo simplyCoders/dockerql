@@ -23,13 +23,20 @@ import * as dockerql from 'dockerql'
 
     try {
         // setup the dockerql option, for now this means loglevel
-        dockerql.setup()
+        dockerql.init()
 
         // connect to a registry, in this case dockerhub with anonymous access
         await dockerql.connect({ name: "dockerhub", type: "dockerhub" })
 
         // select the list of repos
         const rsp = await dockerql.query(`SELECT repo, stars, pulls FROM repos`)
+        
+        // catch errors
+        if (rsp.code !== 200) {
+            console.error(rsp.message)
+            return
+        }
+
         ...
     } catch (err) {
         console.log("Error ", err)
