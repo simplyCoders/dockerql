@@ -4,11 +4,7 @@ A simple way to get started is using a docker container running dockerql.
 
 Follow these steps.
 
-1. Create a new folder and cd to it.
-
-~~~bash
-mkdir dockerql-test;cd dockerql-test
-~~~
+1. cd to a location where you want to deploy dockerql. 
 
 2. Clone from github.
 
@@ -16,10 +12,22 @@ mkdir dockerql-test;cd dockerql-test
 git clone https://github.com/simplyCoders/dockerql.git
 ~~~
 
-3. Run the service locally.
+3. Build lib locally.
 
 ~~~bash
-cd ./server/&&npm install&&npm run build&&npm run start:anonymous
+cd dockerql/lib/&&npm run build:clean
+~~~
+
+4. Build the service locally.
+
+~~~bash
+cd ../server/&&npm run build:clean
+~~~
+
+5. Run the service.
+
+~~~bash
+npm start
 ~~~
 
 ![terminal](./terminal.png)
