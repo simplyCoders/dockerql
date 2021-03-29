@@ -15,7 +15,7 @@
     "typescript": "^4.1.5"
   },
   "dependencies": {
-    "dockerql": "^0.1.2",
+    "dockerql": "^0.1.4",
     "humanify-numbers": "^1.0.1"
   }
 }
