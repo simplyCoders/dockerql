@@ -25,7 +25,7 @@ const main = async () => {
             pulls: Numbers.stringify(record.pulls)
         })
     }
-    // print the number of repos and the first entry
+    // print a table of the results
     console.table(tbl)
 
 }
