@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.1.1 (March-28-2021)
+## 0.1.4 (March-28-2021)
 * Stabilization release. 
 
 ## 0.1.0 (March-15-2021)
