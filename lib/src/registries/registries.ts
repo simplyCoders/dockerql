@@ -1,4 +1,5 @@
 import { iActiveSessions } from './types'
+import { DQLError } from '../types'
 
 // define registry
 interface RegistryRecord {
@@ -13,16 +14,18 @@ interface RegistryRecord {
 // ----------------------------------------------
 export const getRegistries = async (where: any, sessions: iActiveSessions): Promise<any[]> => {
   if (where !== null) {
-    throw new Error(`Query the 'Registries' table does not support the WHERE clause.`)
+    throw { code: 400, message: `Query the Registries table does not support the WHERE clause.` } as DQLError
   }
   const records: RegistryRecord[] = []
-  sessions.entries.forEach((session) => {
+  for (const key in sessions.entries) {
+    const session = sessions.entries[key]
     records.push({
       registry: session.registry,
       type: session.type,
       host: session.host,
       namespace: session.namespace,
     })
-  })
+  }
+
   return records
 }

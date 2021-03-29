@@ -1,4 +1,4 @@
-/// <reference path="../index.d.ts" />
+/// <reference path="./node-sqlparser.d.ts" />
 import * as sqlparser from 'node-sqlparser'
 import alasql from 'alasql'
 
@@ -9,6 +9,7 @@ import { getNamespaces } from './namespaces'
 import { getRepos } from './repos'
 import { getImages } from './images'
 import * as logger from '../helpers/logger'
+import { Response, DQLError } from '../types'
 
 // ----------------------------------------------
 // Helper to call the appropiate getTable based on tableName and registry type
@@ -24,25 +25,35 @@ const getTable = async (tableName: string, where: any, sessions: iActiveSessions
     case 'images':
       return getImages(where, sessions)
     default:
-      throw new Error(`Unknown table name '${tableName}'.`)
+      throw { code: 400, message: `Unknown table name "${tableName}".` } as DQLError
   }
 }
 
 // ----------------------------------------------
 // Parse the SQL statement and perform the needed getTable
 // ----------------------------------------------
-export const query = async (sql: string, sessions: iActiveSessions): Promise<any[]> => {
+export const query = async (sql: string, sessions: iActiveSessions): Promise<Response> => {
 
   try {
     logger.info(`Request:${sql}`)
 
+    // Support only SELECT statements
+    if (typeof sql !== "string" || sql === '') {
+      throw { code: 400, message: `SQL statement can not be empty.` } as DQLError
+    }
+
     // Parse query
-    const ast = sqlparser.parse(sql)
-    logger.info(`ACT:\n${JSON.stringify(ast)}`)
+    let ast: any = {}
+    try {
+      ast = sqlparser.parse(sql)
+      logger.info(`ACT:\n${JSON.stringify(ast)}`)
+    } catch (err) {
+      throw { code: 400, message: err.message } as DQLError
+    }
 
     // Support only SELECT statements
     if (ast.type !== 'select') {
-      throw new Error(`Expected 'SELECT' statement but '${ast.type}' found.`)
+      throw { code: 400, message: `Expected 'SELECT' statement but '${ast.type}' found.` } as DQLError
     }
 
     // Hanldle the query and get result set
@@ -55,12 +66,16 @@ export const query = async (sql: string, sessions: iActiveSessions): Promise<any
     const response = alasql(localSql, [data])
 
     // Publish the result set
-    logger.info(`{ code:200, message: "Ok.", count: ${response.length} }`)
-    return response
+    logger.info(`Ok, results count: ${response.length}`)
+    return { code: 200, message: 'Ok.', data: response }
 
   } catch (err) {
-    const msg = (err instanceof Error) ? (err as Error).message : err
-    logger.error(msg)
-    throw new Error(msg)
+    logger.error(err)
+    const dqlErr = err as DQLError
+    if (typeof dqlErr.code !== "undefined") {
+      return { code: dqlErr.code, message: dqlErr.message }
+    } else {
+      return { code: 400, message: "bad request." }
+    }
   }
 }

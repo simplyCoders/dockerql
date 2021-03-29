@@ -1,4 +1,5 @@
 src
 .eslint*
 tsconfig.json
+tests
 *.tgz

@@ -5,7 +5,7 @@
   "main": "/dist/index.js",
   "scripts": {
     "build": "tsc --build",
-    "start": "export NODE_ENV=development;export VERBOSE=1;export DOCKER_REGISTRIES_FILE=~/Documents/registries.json;npx ts-node src/index.ts",
+    "start": "export NODE_ENV=development;export VERBOSE=1;export DOCKER_REGISTRIES_FILE=~/.dockerql/config.json;npx ts-node src/index.ts",
     "start:anonymous": "export NODE_ENV=development;npx ts-node src/index.ts",
     "build:clean": "rm -rf node_modules;rm -rf dist;rm package-lock.json;clear;npm install&&ls ../lib/*.tgz|xargs -I{} npm install {} -s&&npm run build"
   },
@@ -34,7 +34,7 @@
     "@types/express": "^4.17.11",
     "@types/figlet": "^1.2.1",
     "cors": "^2.8.5",
-    "dockerql": "file:../lib/dockerql-0.1.0.tgz",
+    "dockerql": "file:../lib/dockerql-0.1.1.tgz",
     "express": "^4.17.1",
     "figlet": "^1.5.0",
     "fs": "^0.0.1-security"

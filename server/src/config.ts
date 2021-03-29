@@ -8,7 +8,7 @@ if (typeof (process.env.DOCKERQL_CONF) !== 'undefined') {
   configJson = JSON.parse(process.env.DOCKERQL_CONF)
   console.info(`Info. Config taken from env DOCKERQL_CONF`)
 } else {
-  const configFile = process.env.DOCKERQL_FILE || '~/.dockerql/config.json'
+  const configFile = process.env.DOCKERQL_FILE || '/var/dockerql/config.json'
   if (fs.existsSync(configFile)) {
     configJson = JSON.parse(fs.readFileSync(configFile).toString())
     console.info(`Info. Config taken from file ${configFile}`)

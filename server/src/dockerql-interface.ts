@@ -8,7 +8,7 @@ import * as config from "./config"
 // ----------------------------------------------
 export const init = async () => {
   // setup the dockerql option, for now this means loglevel
-  dockerql.setup({ loglevel: config.loglevel })
+  dockerql.init({ loglevel: config.loglevel })
 
   try {
     // connect to a registry, in this case dockerhub with anonymous access
@@ -35,19 +35,24 @@ export const query = async (req: express.Request, res: express.Response) => {
   }
 
   try {
-    const results = await dockerql.query(sql.toString())
+    const rsp = await dockerql.query(sql.toString())
+    // check for errors
+    if (rsp.code !== 200) {
+      console.error(rsp.message)
+      res.status(rsp.code)
+      res.json({ code: rsp.code, message: rsp.message })
+    }
+
     // Publish the result set
     res.status(200)
     res.json({
       code: 200,
       message: 'Query executed successfully.',
-      count: results.length,
-      data: results,
+      count: rsp.data.length,
+      data: rsp
     })
   } catch (err) {
-    const code = typeof (err.code) !== 'undefined' ? err.code : 400
-    const msg = typeof (err.message) !== 'undefined' ? err.message : 'Internal error.'
-    res.status(code)
-    res.json({ code, message: msg })
+    res.status(500)
+    res.json({ code: 500, message: JSON.stringify(err) })
   }
 }

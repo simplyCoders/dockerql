@@ -1,10 +1,11 @@
 # Set up access to Google Container Registry (GCR)
 
-Edit your [```.registry.json```](./set-up-access-to-registries) file and add an entry for an instance of GCR: 
+1. Set env variable to point to config file (default `/var/dockerql/config.json`)
+
+2. Edit your [`/var/dockerql/config.json`](./set-up-access-to-registries) file and add an entry for an instance of dockerhub: 
 
 ~~~json
 {
-  "default-registry": {registryName},
   "registries": [
     {
       "name": {registryName},
@@ -23,14 +24,14 @@ Edit your [```.registry.json```](./set-up-access-to-registries) file and add an 
 
 ## Examples
 
-For simplicity let's assume that the default registry in the ```.registry.json``` file is gcr. If this is not the case, for all of the examples below the WHERE clause will need to include a condition like  ```AND registry="my-gcr-registry```.  
+For simplicity let's assume `{registryName}` is set to `my-registry`.
 
 #### Find repos in my project-id
 
-To get the list of repos under one of my projects named ```my-project-id``` we will use the following.
+To get the list of repos under one of my projects named `my-project-id` we will use the following.
 
 ~~~sql
-SELECT * FROM repos WHERE namespace = "my-project-id"
+SELECT * FROM repos WHERE namespace = "my-project-id" AND registry="my-registry"
 ~~~
 
 #### Find repos in a google's list of public-containers
@@ -38,7 +39,7 @@ SELECT * FROM repos WHERE namespace = "my-project-id"
 Google maintaines a list of [public containers](https://console.cloud.google.com/gcr/images/google-containers) for many OSS projects, these images can be used as base images in many projects. We can easily use dockerql to find the list of repos available in that list.
 
 ~~~sql
-SELECT * FROM repos WHERE namespace = "google-containers"
+SELECT * FROM repos WHERE namespace = "google-containers" AND registry="my-registry"
 ~~~
 
 #### Find repos in a google's list of distroless
@@ -46,7 +47,7 @@ SELECT * FROM repos WHERE namespace = "google-containers"
 Google also maintaines a list of [distroless](https://console.cloud.google.com/gcr/images/distroless) images, these images can also be used as base images in many projects. We can easily use dockerql to find the list of repos available in that list.
 
 ~~~sql
-SELECT * FROM repos WHERE namespace = "distroless"
+SELECT * FROM repos WHERE namespace = "distroless" AND registry="my-registry"
 ~~~
 
 ## Next steps

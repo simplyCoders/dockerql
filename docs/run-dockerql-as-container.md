@@ -38,7 +38,7 @@ If you have defined a configuration file under the host os at `~/.dockerql/confi
 The to run dockerql with that configuration use the following:
 
 ~~~
-docker run -p 8080:8080 -v ~/.dockerql:/usr/server/.dockerql -d simplycoders/dockerql
+docker run -p 8080:8080 -v ~/.dockerql:/var/dockerql -d simplycoders/dockerql
 ~~~
 
 ## Next steps

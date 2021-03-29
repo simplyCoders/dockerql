@@ -1,10 +1,11 @@
 # Set up access to Amazon Elastic Container Registry (ECR)
 
-Edit your [```.registry.json```](./set-up-access-to-registries) file and add an entry for an instance of ECR: 
+1. Set env variable to point to config file (default `/var/dockerql/config.json`)
+
+2. Edit your [`/var/dockerql/config.json`](./set-up-access-to-registries) file and add an entry for an instance of dockerhub: 
 
 ~~~json
 {
-  "default-registry": {registryName},
   "registries": [
     {
       "name": {registryName},
@@ -24,14 +25,14 @@ Edit your [```.registry.json```](./set-up-access-to-registries) file and add an 
 
 ## Examples
 
-For simplicity let's assume that the default registry in the ```.registry.json``` file is ecr. If this is not the case, for all of the examples below the WHERE clause will need to include a condition like  ```AND registry="my-ecr-registry```.  
+For simplicity let's assume `{registryName}` is set to `my-registry`.
 
 #### Find repos in a specific region
 
-To get the list of repos in ```us-east-1``` we will use the following.
+To get the list of repos in `us-east-1` we will use the following.
 
 ~~~sql
-SELECT * FROM repos WHERE namespace = "us-east-1"
+SELECT * FROM repos WHERE namespace = "us-east-1" AND registry="my-registry"
 ~~~
 
 ## Next steps
