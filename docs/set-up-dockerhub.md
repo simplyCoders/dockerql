@@ -1,10 +1,11 @@
 # Set up access to Dockerhub
 
-Edit your [```.registry.json```](./set-up-access-to-registries) file and add an entry for an instance of dockerhub: 
+1. Set env variable to point to config file (default `/var/dockerql/config.json`)
+
+2. Edit your [`/var/dockerql/config.json`](./set-up-access-to-registries) file and add an entry for an instance of dockerhub: 
 
 ~~~json
 {
-  "default-registry": {registryName},
   "registries": [
     {
       "name": {registryName},
@@ -22,14 +23,14 @@ Edit your [```.registry.json```](./set-up-access-to-registries) file and add an 
 
 ## Examples
 
-For simplicity let's assume that the default registry in the ```.registry.json``` file is dockerhub. If this is not the case, for all of the examples below the WHERE clause will need to include a condition like  ```AND registry="my-dockerhub-registry```.  
+For simplicity let's assume `{registryName}` is set to `my-registry`.
 
 #### Find repos in my organization
 
-To get the list of repos under one of my organizations called ```my-org``` we will use the following.
+To get the list of repos under one of my organizations called `my-org` we will use the following.
 
 ~~~sql
-SELECT * FROM repos WHERE namespace = "my-org"
+SELECT * FROM repos WHERE namespace = "my-org" AND registry="my-registry"
 ~~~
 
 #### Find repos in public organization
@@ -38,7 +39,7 @@ These days, many vendors and OSS projects distribute their software as container
 For example, if we wanted to get a list of all the repos under the [elastic](https://hub.docker.com/u/elastic) organization, we would use the following. 
 
 ~~~sql
-SELECT * FROM repos WHERE namespace = "elastic"
+SELECT * FROM repos WHERE namespace = "elastic" AND registry="my-registry"
 ~~~
 
 #### Find repos in the list of "Official Images"
@@ -49,7 +50,7 @@ Behind the scenes these images are listed under a special organization called "l
 To get the list of repos under the list of "Official Images" let's use the following. 
 
 ~~~sql
-SELECT * FROM repos WHERE namespace = "library"
+SELECT * FROM repos WHERE namespace = "library" AND registry="my-registry"
 ~~~
 
 ## Next steps

@@ -2,22 +2,53 @@
 
 A read-only SQL-like interface for docker registries.
 
-> **Early stage project**. Join the effort!
+> **Early stage project**
 
 ## Why
 
 SQL-like query interfaces is still one of the easiest to understand interface to query databases. We are still missing something like that for docker registries. 
-In addition, each docker implementation is a bit different in terms of its authentication, scoping, and features. dockerql provides a unified yet extendable way to access multiple types of registries. 
+In addition, each docker registry implementation is a bit different in terms of its authentication, scoping, and custom fields. dockerql provides a unified yet extendable way to access multiple types of registries. 
 
-## Getting started
+## Getting started with dockerql as a package
 
-Getting started is easy and should take seconds. 
+* Install dockerql:
+~~~
+npm install -i dockerql --save
+~~~
 
-Choose your way to get started:
+* Use dockerql:
+~~~typescript
+import * as dockerql from 'dockerql'
+...
 
-1. Getting started with [docker container](https://simplycoders.github.io/dockerql/run-dockerql-as-container).
-1. Getting started with [local service](https://simplycoders.github.io/dockerql/run-dockerql-as-local-server).
-1. Set up [access to your registries](https://simplycoders.github.io/dockerql/set-up-access-to-registries).
+    try {
+        // setup the dockerql option, for now this means loglevel
+        dockerql.setup()
+
+        // connect to a registry, in this case dockerhub with anonymous access
+        await dockerql.connect({ name: "dockerhub", type: "dockerhub" })
+
+        // select the list of repos
+        const rsp = await dockerql.query(`SELECT repo, stars, pulls FROM repos`)
+        ...
+    } catch (err) {
+        console.log("Error ", err)
+    }
+    ...
+~~~
+
+See the full [simple example](https://github.com/simplyCoders/dockerql/examples/simple),
+or try it in [replit](https://replit.com/@ezborgy/dockerql-example#index.js).
+
+## Getting started with prepackage dockerql as a service
+
+dockerql can be run as a standalone service exposing a query endpoint as well as an npm package. 
+
+Here are few different ways to quickly get started with running dockerql as a service. 
+
+1. Run as a [docker container](https://simplycoders.github.io/dockerql/run-dockerql-as-container).
+1. Run as a [local service](https://simplycoders.github.io/dockerql/run-dockerql-as-local-server).
+1. Set up the service [access to your registries](https://simplycoders.github.io/dockerql/set-up-access-to-registries).
 
 ## Supported registry types
 
@@ -30,3 +61,14 @@ Currently supported:
 ## Documentation 
 
 * docekrql [docs](https://simplycoders.github.io/dockerql/).
+
+## Folder structure
+
+dockerQL
+|
+└─ examples
+|  └─ simple
+| 
+└─ lib # packaging of dockerQL as an npm package
+| 
+└─ server # api server servicing dockerql via REST api  

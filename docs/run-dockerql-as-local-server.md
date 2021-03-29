@@ -10,16 +10,16 @@ Follow these steps.
 mkdir dockerql-test;cd dockerql-test
 ~~~
 
-2. Install from npmjs.
+2. Clone from github.
 
 ~~~bash
-npm i dockerql
+git clone https://github.com/simplyCoders/dockerql.git
 ~~~
 
 3. Run the service locally.
 
 ~~~bash
-cd ./node_modules/dockerql/;npm install;npm run build;npm run start:anonymous
+cd ./server/&&npm install&&npm run build&&npm run start:anonymous
 ~~~
 
 ![terminal](./terminal.png)

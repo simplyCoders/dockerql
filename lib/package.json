@@ -1,0 +1,62 @@
+{
+  "name": "dockerql",
+  "version": "0.1.2",
+  "displayName": "DockerQL",
+  "description": "A read-only SQL-like interface for docker registries.",
+  "license": "MIT",
+  "authors": [
+    "simplyCoders"
+  ],
+  "keywords": [
+    "docker",
+    "registry",
+    "SQL",
+    "dockerhub",
+    "ECR",
+    "GCR"
+  ],
+  "bugs": "https://github.com/simplyCoders/dockerql/issues",
+  "repository": "github:simplyCoders/dockerql",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "prebuild": "eslint . --ext .ts --fix",
+    "prestart": "npm run build",
+    "build": "tsc -p tsconfig.json",
+    "build:clean": "rm *.tgz;rm -rf node_modules;rm -rf dist;rm package-lock.json;clear;npm install&&npm run build&&npm pack",
+    "test": "export NODE_ENV=test;mocha -r ts-node/register tests/*.spec.ts",
+    "test:coverage": "export NODE_ENV=test;npx nyc@latest mocha -r ts-node/register tests/*.spec.ts"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.2.0",
+    "@types/supertest": "^2.0.10",
+    "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@typescript-eslint/parser": "^4.17.0",
+    "chai": "^4.2.0",
+    "eslint": "^7.22.0",
+    "mocha": "^8.2.1",
+    "nock": "^13.0.5",
+    "supertest": "^6.0.1",
+    "ts-node": "^9.1.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm start",
+    "ext": "ts"
+  },
+  "dependencies": {
+    "alasql": "^1.7.2",
+    "aws-sdk": "^2.869.0",
+    "axios": "^0.21.1",
+    "node-sqlparser": "^1.0.4"
+  }
+}

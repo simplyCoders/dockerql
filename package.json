@@ -1,0 +1,26 @@
+{
+    "name": "dockerql",
+    "version": "0.1.1",
+    "description": "A read-only SQL-like interface for docker registries.",
+    "license": "MIT",
+    "authors": [
+        "simplyCoders"
+    ],
+    "keywords": [
+        "docker",
+        "registry",
+        "SQL",
+        "dockerhub",
+        "ECR",
+        "GCR"
+    ],
+    "bugs": "https://github.com/simplyCoders/dockerql/issues",
+    "repository": "github:simplyCoders/dockerql",
+    "scripts": {
+        "msgs": "clear&&tput setaf 1&&echo '----------------------------'&&echo 'Run npm from the sub-folders'&&echo '----------------------------'",
+        "build": "npm run msgs",
+        "test": "npm run msgs",
+        "start": "npm run msgs",
+        "dockerize": "docker build -t simplycoders/dockerql ."
+    }
+}

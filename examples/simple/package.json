@@ -1,0 +1,21 @@
+{
+  "name": "simple",
+  "version": "1.0.0",
+  "description": "A read-only SQL-like interface for docker registries.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build",
+    "start": "npx ts-node src/index.ts",
+    "build:clean": "rm -rf node_modules;rm -rf dist;rm package-lock.json;clear;npm install&&ls ../../lib/*.tgz|xargs -I{} npm install {} -s&&npm run build"
+  },
+  "author": "simplyCoders",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "dockerql": "^0.1.2",
+    "humanify-numbers": "^1.0.1"
+  }
+}
