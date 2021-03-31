@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.7 (March-31-2021)
+* Changes to readme.
+
 ## 0.1.6 (March-31-2021)
 * A second fix for npm published. 
 
