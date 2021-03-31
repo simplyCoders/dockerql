@@ -1,6 +1,6 @@
 {
   "name": "dockerql",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "displayName": "DockerQL",
   "description": "A read-only SQL-like interface for docker registries.",
   "license": "MIT",
@@ -58,5 +58,8 @@
     "aws-sdk": "^2.869.0",
     "axios": "^0.21.1",
     "node-sqlparser": "^1.0.4"
-  }
+  },
+  "files":  [
+    "dist/"
+  ]
 }

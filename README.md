@@ -44,7 +44,7 @@ import * as dockerql from 'dockerql'
     ...
 ~~~
 
-See the full [simple example](https://github.com/simplyCoders/dockerql/examples/simple),
+See the full [simple example](https://github.com/simplyCoders/dockerql/tree/main/examples/simple),
 or try it in [replit](https://replit.com/@ezborgy/dockerql-example#index.js).
 
 ## Getting started with prepackage dockerql as a service

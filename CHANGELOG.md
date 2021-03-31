@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.5 (March-31-2021)
+* Fix issue with files excluded from the npm published. 
+
 ## 0.1.4 (March-28-2021)
 * Stabilization release. 
 
