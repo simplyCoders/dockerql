@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.6 (March-31-2021)
+* A second fix for npm published. 
+
 ## 0.1.5 (March-31-2021)
 * Fix issue with files excluded from the npm published. 
 

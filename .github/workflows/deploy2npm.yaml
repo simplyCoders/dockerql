@@ -16,6 +16,6 @@ jobs:
 
     # Publish to npm
     - name: publish
-      run: cp README.md ./lib;cp CHANGELOG.md ./lib;cp LICENSE ./lib;cd ./lib;npm publish --access public
+      run: cp README.md ./lib;cp CHANGELOG.md ./lib;cp LICENSE ./lib;cd ./lib;npm run build:clean&&npm publish --access public
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
