@@ -1,3 +1,5 @@
+import { DQLError } from '../types'
+
 // ----------------------------------------------
 // logger level
 // ----------------------------------------------
@@ -9,9 +11,11 @@ const options = {
 // exports
 // ----------------------------------------------
 export const setLoglevel = (value: number) => {
-    if (value < 0) options.loglevel = 0
-    else if (value > 3) options.loglevel = 3
-    else options.loglevel = Math.trunc(value)
+    if (![0,1,2,3].includes(value)) {
+        throw { code: 400, message: `Invalid Options.loglevel value was provided.` } as DQLError
+    }
+
+    options.loglevel = Math.trunc(value)
 }
 
 export const info = (str: string) => {

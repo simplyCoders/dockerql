@@ -1,2 +1,2 @@
-export { Registry, Options, Response } from './types'
+export { Registry, Options, Response, LogLevels } from './types'
 export { init, connect, query } from './core'
