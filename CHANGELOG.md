@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.8 (April-2-2021)
+* Change error handling to throw. 
+* Add tests for init and connect.
+
 ## 0.1.7 (March-31-2021)
 * Changes to readme.
 

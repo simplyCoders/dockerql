@@ -10,6 +10,13 @@ export type Registry = // registry is a definition of connection details with a 
         password?: string
     }
 
+export const LogLevels = {
+    NoLogging: 0,
+    Info: 1,
+    Warn: 2,
+    Error: 3
+}
+
 export type Options = // Options to set up DockerQl
     {
         loglevel?: number // 0 - none, 1 - info and above, 2 - warn and above, 3 - error and above

@@ -32,30 +32,46 @@ describe('Test the Registries table.', async () => {
   })
 
   it('Select from registries with WHERE is not supported', async () => {
-    const res = await dockerql.query(`SELECT * FROM registries WHERE registry != "abc"`)
-    chai.expect(res.code).to.eql(400)
-    chai.expect(res.message).to.eql(`Query the Registries table does not support the WHERE clause.`)
+    try {
+      const res = await dockerql.query(`SELECT * FROM registries WHERE registry != "abc"`)
+      chai.expect(res.code).to.eql(400) // Error if get to here
+    } catch (err) {
+      chai.expect(err.code).to.eql(400)
+      chai.expect(err.message).to.eql(`Query the Registries table does not support the WHERE clause.`)
+    }
   })
 
   it('Simple select from registries', async () => {
-    const res = await dockerql.query(`SELECT * FROM registries`)
-    chai.expect(res.code).to.eql(200)
-    chai.expect(res.data.length).to.eql(2)
+    try {
+      const res = await dockerql.query(`SELECT * FROM registries`)
+      chai.expect(res.code).to.eql(200)
+      chai.expect(res.data.length).to.eql(2)
+    } catch (err) {
+      chai.expect(err.code).to.eql(200) // Error if get to here
+    }
   })
 
   it('Select from registries with count(*)', async () => {
-    const res = await dockerql.query(`Select count(*) from Registries`)
-    chai.expect(res.code).to.eql(200)
-    chai.expect(res.data.length).to.eql(1)
-    chai.expect(res.data[0]['COUNT(*)']).to.eql(2)
+    try {
+      const res = await dockerql.query(`Select count(*) from Registries`)
+      chai.expect(res.code).to.eql(200)
+      chai.expect(res.data.length).to.eql(1)
+      chai.expect(res.data[0]['COUNT(*)']).to.eql(2)
+    } catch (err) {
+      chai.expect(err.code).to.eql(200) // Error if get to here
+    }
   })
 
   it('Select from registries with columns', async () => {
-    const res = await dockerql.query(`Select registry, type, namespace from Registries`)
-    chai.expect(res.code).to.eql(200)
-    chai.expect(res.data.length).to.eql(2)
-    chai.expect(res.data[0].registry).to.eql('dockerhub')
-    chai.expect(res.data[0].type).to.eql('dockerhub')
-    chai.expect(res.data[0].namespace).to.eql('alpine')
+    try {
+      const res = await dockerql.query(`Select registry, type, namespace from Registries`)
+      chai.expect(res.code).to.eql(200)
+      chai.expect(res.data.length).to.eql(2)
+      chai.expect(res.data[0].registry).to.eql('dockerhub')
+      chai.expect(res.data[0].type).to.eql('dockerhub')
+      chai.expect(res.data[0].namespace).to.eql('alpine')
+    } catch (err) {
+      chai.expect(err.code).to.eql(200) // Error if get to here
+    }
   })
 })

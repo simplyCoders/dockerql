@@ -36,12 +36,6 @@ export const query = async (req: express.Request, res: express.Response) => {
 
   try {
     const rsp = await dockerql.query(sql.toString())
-    // check for errors
-    if (rsp.code !== 200) {
-      console.error(rsp.message)
-      res.status(rsp.code)
-      res.json({ code: rsp.code, message: rsp.message })
-    }
 
     // Publish the result set
     res.status(200)
@@ -52,7 +46,8 @@ export const query = async (req: express.Request, res: express.Response) => {
       data: rsp
     })
   } catch (err) {
-    res.status(500)
-    res.json({ code: 500, message: JSON.stringify(err) })
+    console.error(err.message)
+    res.status(err.code)
+    res.json({ code: err.code, message: err.message })
   }
 }

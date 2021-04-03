@@ -73,9 +73,9 @@ export const query = async (sql: string, sessions: iActiveSessions): Promise<Res
     logger.error(err)
     const dqlErr = err as DQLError
     if (typeof dqlErr.code !== "undefined") {
-      return { code: dqlErr.code, message: dqlErr.message }
+      throw { code: dqlErr.code, message: dqlErr.message } as DQLError
     } else {
-      return { code: 400, message: "bad request." }
+      throw { code: 400, message: `Bad request.` } as DQLError
     }
   }
 }
