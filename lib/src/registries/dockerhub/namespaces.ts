@@ -6,8 +6,12 @@ import { iSession } from '../types'
 // perform get all namespaces
 // ----------------------------------------------
 export const getNamespaces = async (session: iSession, host: string): Promise<any[]> => {
-  if (session.token === '') { // if this is anonymous user then return empty list
-    return [session.namespace]
+  if (session.token === '') { // if this is anonymous user then return 'library' as the namesapce'
+    return [{
+      registry: session.registry,
+      host,
+      namespace: 'library'
+    }]
   }
 
   const endpoint = `https://${host}/v2/repositories/namespaces/`

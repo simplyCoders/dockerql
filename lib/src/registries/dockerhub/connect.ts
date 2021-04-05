@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+import { DQLError } from '../../types'
 import { iRegistry, iSession } from '../types'
 import * as logger from '../../helpers/logger'
 
@@ -40,18 +41,29 @@ export const connect = async (registry: iRegistry): Promise<iSession> => {
     password: registry.password,
   }
 
-  const resp = await axios.post(`https://${host}/v2/users/login/`, data)
-  const { token } = resp.data
+  try {
+    const resp = await axios.post(`https://${host}/v2/users/login/`, data)
+    const { token } = resp.data
 
-  logger.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
-  logger.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
-  logger.info('--------------------------------------------------')
+    logger.info(`Authenticated successfully to ${registry.name} (type: ${registry.type})`)
+    logger.info(`Host: ${host}, Namespace (organization): ${namespace}, User: ${registry.username}`)
+    logger.info('--------------------------------------------------')
 
-  return {
-    registry: registry.name,
-    type: registry.type,
-    namespace,
-    host,
-    token
+    return {
+      registry: registry.name,
+      type: registry.type,
+      namespace,
+      host,
+      token
+    }
+  } catch (err) {
+    if (typeof err.response !== "undefined" && typeof err.response.status === "number") {
+      logger.error(`Network error connecting to registry ${registry.name}`)
+
+      if (err.response.status === 401) {
+        throw { code: 401, message: `Incorrect authentication credentials.` } as DQLError
+      }
+    }
+    throw { code: 400, message: `Bad request.` } as DQLError
   }
 }

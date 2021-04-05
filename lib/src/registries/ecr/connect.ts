@@ -1,5 +1,6 @@
 import * as aws from 'aws-sdk'
 
+import { DQLError } from '../../types'
 import { iRegistry, iSession } from '../types'
 import * as logger from '../../helpers/logger'
 
@@ -23,7 +24,7 @@ export const connect = async (registry: iRegistry): Promise<iSession> => {
   const authTokenResponse = await ecr.getAuthorizationToken().promise()
   if (!Array.isArray(authTokenResponse.authorizationData)
     || !authTokenResponse.authorizationData.length) {
-    throw new Error(`ECR '${registry.name}' error getting an authorization token from AWS.`)
+    throw { code: 400, message: `ECR "${registry.name}" error getting an authorization token from AWS.` } as DQLError
   }
 
   const host = authTokenResponse.authorizationData[0].proxyEndpoint

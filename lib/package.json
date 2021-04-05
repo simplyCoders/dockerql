@@ -1,6 +1,6 @@
 {
   "name": "dockerql",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "displayName": "DockerQL",
   "description": "A read-only SQL-like interface for docker registries.",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "prestart": "npm run build",
     "build": "tsc -p tsconfig.json",
     "build:clean": "rm *.tgz;rm -rf node_modules;rm -rf dist;rm package-lock.json;clear;npm install&&npm run build&&npm pack",
-    "test": "export NODE_ENV=test;mocha -r ts-node/register tests/*.spec.ts",
+    "test": "export NODE_ENV=test;mocha -r ts-node/register tests/t*.spec.ts",
     "test:coverage": "export NODE_ENV=test;npx nyc@latest mocha -r ts-node/register tests/*.spec.ts"
   },
   "devDependencies": {
@@ -59,7 +59,7 @@
     "axios": "^0.21.1",
     "node-sqlparser": "^1.0.4"
   },
-  "files":  [
+  "files": [
     "dist/"
   ]
 }

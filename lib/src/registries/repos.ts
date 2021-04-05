@@ -1,3 +1,4 @@
+import { DQLError } from '../types'
 import { getRegistryType, iActiveSessions } from './types'
 import { analyzeWhere } from './where-helpers'
 
@@ -8,14 +9,20 @@ export const getRepos = async (
   where: any,
   sessions: iActiveSessions
 ): Promise<any[]> => {
-  const msg = new Error(`WHERE for 'Repos' may only filter by 'Registry', 'Host' and 'Namespace'.`)
+  const throwMessage = { 
+    code: 400, 
+    message: `WHERE for "Repos" may only filter by "Registry", "Host" and "Namespace".` 
+  } as DQLError
   const supportedColumns = ['registry', 'namespace', 'host']
 
-  const columns = analyzeWhere(where, supportedColumns, msg)
+  const columns = analyzeWhere(where, supportedColumns, throwMessage)
 
   const registryName = (typeof columns.registry === 'string') ? columns.registry : sessions.default
   if (typeof sessions.entries[registryName] === 'undefined') {
-    throw new Error(`WHERE clause includes unknown registry name '${registryName}'.`)
+    throw { 
+      code: 400, 
+      message: `WHERE clause includes unknown registry name "${registryName}".` 
+    } as DQLError
   }
 
   const session = sessions.entries[registryName]
