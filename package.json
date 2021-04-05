@@ -21,6 +21,8 @@
         "build": "npm run msgs",
         "test": "npm run msgs",
         "start": "npm run msgs",
-        "dockerize": "docker build -t simplycoders/dockerql ."
+        "dockerize": "docker build -t simplycoders/dockerql .",
+        "build:local": "cd lib/&&npm run build:clean&&cd ../server/&&npm run build:clean",
+        "start:local": "cd server&&npm start"
     }
 }

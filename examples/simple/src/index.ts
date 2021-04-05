@@ -9,8 +9,8 @@ const main = async () => {
         // connect to a registry, in this case dockerhub with anonymous access
         await dockerql.connect({ name: "dockerhub", type: "dockerhub" })
 
-        // select the list of repos
-        const rsp = await dockerql.query(`SELECT repo, stars, pulls FROM repos`)
+        // get top ten public library repos by number of stars
+        const rsp = await dockerql.query(`SELECT repo, stars, pulls FROM repos ORDER BY stars DESC LIMIT 10`)
         // humanify the numbers
         const tbl = []
         for (let i = 0; i < rsp.data.length; i += 1) {

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.9 (April-4-2021)
+* Simplify local server start.
+* Add tests for dockerhub.
+
 ## 0.1.8 (April-2-2021)
 * Change error handling to throw. 
 * Add tests for init and connect.
